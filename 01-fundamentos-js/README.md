@@ -1,0 +1,4 @@
+- `npm init -y`: criar arquivo *package.json*.
+- **CommonJS**: padrão de importação (usando "require").
+- **ESModules**: padrão de importação atualmente mais usado (usando "import/export").
+- 
