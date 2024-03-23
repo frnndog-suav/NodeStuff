@@ -9,8 +9,20 @@ class InverseNumberStream extends Transform {
     }
 }
 
-const server = http.createServer((req, res) => {
-    return req.pipe(new InverseNumberStream()).pipe(res)
+const server = http.createServer(async (req, res) => {
+    const buffers = []
+
+    for await (const chunck of req) {
+        buffers.push(chunck)
+    }
+
+    const fullStreamContent = Buffer.concat(buffers).toString()
+
+    console.log("fullStreamContent", fullStreamContent)
+
+    return res.end(fullStreamContent)
+
+    // return req.pipe(new InverseNumberStream()).pipe(res)
 })
 
 server.listen(3334)
