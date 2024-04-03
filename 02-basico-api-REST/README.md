@@ -7,3 +7,4 @@
 7 - instalar o "tsx"
 8 - instalar o eslint "npm i eslint @rocketseat/eslint-config -D"
 9 - criar arquivo "eslintrc.json" e adicionar extensão "@rocketseat/eslint-config/node"
+10 - instalar knex e o driver de sqlite
