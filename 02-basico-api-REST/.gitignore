@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 #Database
-tmp/app.db
+db/app.db

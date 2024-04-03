@@ -19,4 +19,3 @@ app
   .then(() => {
     console.log('server is running....')
   })
-
