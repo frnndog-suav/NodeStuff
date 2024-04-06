@@ -7,6 +7,10 @@ import { checkSessionIdExists } from '../middlewares/check-session-id-exists'
 const MAX_AGE_7_DAYS = 60 * 60 * 24 * 7
 
 export async function transactionRoutes(app: FastifyInstance) {
+  //   app.addHook('preHandler', async () => {
+  //     console.log('exemplo de middleware escopado para todo esse contexto')
+  //   })
+
   app.get(
     '/',
     {
