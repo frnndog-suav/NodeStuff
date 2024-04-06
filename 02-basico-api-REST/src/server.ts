@@ -5,28 +5,9 @@ import { transactionRoutes } from './routes/transactions'
 
 const app = fastify()
 
-app.get('/hello', () => {
-  return 'Hello World'
+app.register(transactionRoutes, {
+  prefix: 'transactions',
 })
-
-app.get('/db', async () => {
-  const test = await knex('sqlite_schema').select('*')
-  return test
-})
-
-app.get('/transaction/test', async () => {
-  const transaction = await knex('transactions')
-    .insert({
-      id: crypto.randomUUID(),
-      title: 'Transação de teste',
-      amount: 1000,
-    })
-    .returning('*')
-
-  return transaction
-})
-
-app.register(transactionRoutes)
 
 app
   .listen({
