@@ -1,5 +1,6 @@
+import { execSync } from 'child_process'
 import request from 'supertest'
-import { afterAll, beforeAll, describe, expect, it, test } from 'vitest'
+import { afterAll, beforeAll, describe, expect, it, beforeEach } from 'vitest'
 import { app } from '../app'
 
 describe('Transactions routes', () => {
@@ -11,10 +12,17 @@ describe('Transactions routes', () => {
     await app.close()
   })
 
+  beforeEach(() => {
+    execSync('npm run knex -- migrate:rollback --all')
+    execSync('npm run knex -- migrate:latest --env test')
+  })
+
   it('should be able to create a new transaction', async () => {
     const response = await request(app.server)
       .post('/transactions')
       .send({ title: 'new transaction', amount: 5000, type: 'credit' })
+
+    console.log('========> response', response)
 
     expect(response.statusCode).toStrictEqual(201)
   })
