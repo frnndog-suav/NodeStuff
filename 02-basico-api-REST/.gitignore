@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+build
 *.local
 .env
 .env.test
@@ -26,4 +27,4 @@ dist-ssr
 *.sw?
 
 #Database
-db/app.db
+db/*.db
