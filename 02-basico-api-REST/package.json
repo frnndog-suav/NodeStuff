@@ -4,22 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/server.ts",
     "lint": "eslint src --ext .ts --fix",
     "knex": "node --import tsx ./node_modules/knex/bin/cli.js --knexfile ./knexfile.ts",
     "migration:dev": "npm run knex -- migrate:latest --env development",
-    "create_table_example": "npm run knex -- migrate:make create-documents"
+    "create_table_example": "npm run knex -- migrate:make create-documents",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@fastify/cookie": "^9.3.1",
+    "@types/supertest": "^6.0.2",
     "dotenv": "^16.4.5",
     "fastify": "^4.26.2",
     "knex": "^3.1.0",
     "sqlite3": "^5.1.7",
+    "supertest": "^6.3.4",
     "tsx": "^4.7.1",
     "typescript": "^5.4.3",
     "zod": "^3.22.4"
@@ -29,6 +31,7 @@
     "@types/node": "^20.12.2",
     "@types/typescript": "^2.0.0",
     "eslint": "^8.57.0",
-    "prettier": "3.2.5"
+    "prettier": "3.2.5",
+    "vitest": "^1.4.0"
   }
 }
