@@ -2,6 +2,8 @@
 
 **Opcional**
     - Instalar prettier
+    - `npm i eslint -D` (lint)
+    - `npm i @rocketseat/eslint-config -D` (configuração)
 
 1 - Levantar requisitos
 
