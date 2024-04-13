@@ -39,3 +39,14 @@
 
 9 - Criar arquivo de variáveis de ambiente (src/env/index.ts)
 
+## Configuração ORM
+
+1 - Instalar `npm i prisma -D`
+
+2 - Executar `npx prisma init`
+
+3 - Criar schema de tabelas em "prisma\schema.prisma"
+
+4 - Executar comando `npx prisma generate` (criar de forma automática a tipagem do schema)
+
+5 - Instalar `npm i @prisma/client`
