@@ -50,3 +50,16 @@
 4 - Executar comando `npx prisma generate` (criar de forma automática a tipagem do schema)
 
 5 - Instalar `npm i @prisma/client`
+
+6 - Instalar docker
+    - user: docker
+    - pass: docker
+
+7 - Rodar comando `docker run --name api-solid-pg -e POSTGRESQL_USERNAME=docker -e POSTGRESQL_PASSWORD=docker -e POSTGRESQL_DATABASE=apisolid -p 5432:5432 bitnami/postgresql:latest` pelo cmd
+
+8 - Atualizar variável de ambiente "DATABASE_URL" no arquivo .env
+
+9 - Rodar comando `npx prisma migrate dev` para atualizar o banco
+    - nomear migration
+
+9.1 - É possível executar `npx prisma studio` para abrir uma interface no browser do banco
