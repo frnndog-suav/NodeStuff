@@ -7,9 +7,16 @@
 
 2 - Executar `npm init -y` para criar o arquivo package.json
 
-3 - Instalar `npm i typescript --save-dev`, `npm install --save @types/node`, `npm i tsup -D`, `npm i fastify` e `npm install --save-dev tsx`
-    - **tsx**: lib para executar código typescript (node não entende código typescript) - converte código typescript em javascript
-    - **tsup**: lib para criar a build
+3.0 - Criar arquivo `.npmrc` para fixar a versão dos pacotes que vão ser instalados
+
+3.1 - Instalar:
+    - `npm i typescript --save-dev`
+    - `npm install --save-dev @types/node`
+    - `npm i tsup -D` (lib para criar a build)
+    - `npm i fastify` (framework backend)
+    - `npm install dotenv --save` (lib para ler variáveis de ambiente)
+    - `npm install --save-dev tsx` (lib para executar código typescript (node não entende código typescript) - converte código typescript em javascript)
+    - `npm i zod` (lib para validação de dados)
 
 4 - Executar `npx tsc --init` para criar o arquivo tsconfig.json
 
@@ -27,3 +34,6 @@
 	"build":  "tsup src --out-dir build",
 },
 ```
+
+9 - Criar arquivo de variáveis de ambiente (src/env/index.ts)
+
