@@ -57,6 +57,8 @@
 
 7 - Rodar comando `docker run --name api-solid-pg -e POSTGRESQL_USERNAME=docker -e POSTGRESQL_PASSWORD=docker -e POSTGRESQL_DATABASE=apisolid -p 5432:5432 bitnami/postgresql:latest` pelo cmd
 
+7.1 - Criar arquivo na raíz "docker-compose.yml" para deixar salvo este comando. Para executa-lo, basta usar o comando `docker compose up -d`
+
 8 - Atualizar variável de ambiente "DATABASE_URL" no arquivo .env
 
 9 - Rodar comando `npx prisma migrate dev` para atualizar o banco
