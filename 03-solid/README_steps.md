@@ -19,6 +19,8 @@
     - `npm install dotenv --save` (lib para ler variáveis de ambiente)
     - `npm install --save-dev tsx` (lib para executar código typescript (node não entende código typescript) - converte código typescript em javascript)
     - `npm i zod` (lib para validação de dados)
+    - `npm i bcryptjs` (lib para fazer hash)
+    - `npm install --save @types/bcryptjs` 
 
 4 - Executar `npx tsc --init` para criar o arquivo tsconfig.json
 
