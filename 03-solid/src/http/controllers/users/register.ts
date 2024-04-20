@@ -30,11 +30,11 @@ export async function registerUser(
     } catch (error) {
         if (error instanceof UserAlreadyExistsError) {
             return reply.status(409).send({
-                error: error.message,
+                message: error.message,
             })
         }
 
-        return reply.status(500).send()
+        throw error
     }
 
     return reply.status(201).send()
