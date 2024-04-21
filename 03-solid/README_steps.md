@@ -21,6 +21,8 @@
     - `npm i zod` (lib para validação de dados)
     - `npm i bcryptjs` (lib para fazer hash)
     - `npm install --save @types/bcryptjs` 
+    - `npm install -D vitest` (lib de teste) 
+    - `npm install -D npm i vite-tsconfig-paths` (completemento para lib de teste - reconhecimento dos paths - configurar arquivo "vite.config.ts" para funcionar)
 
 4 - Executar `npx tsc --init` para criar o arquivo tsconfig.json
 
