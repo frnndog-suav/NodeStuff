@@ -69,3 +69,16 @@
     - nomear migration
 
 9.1 - É possível executar `npx prisma studio` para abrir uma interface no browser do banco
+
+
+
+## Fluxo de criação de uma funcionalidade
+1 - Criar use-case
+
+1.1 - Criar testes do use-case
+
+2 - Criar controller
+
+2.1 - Criar testes de controller
+
+3 - Criar rota

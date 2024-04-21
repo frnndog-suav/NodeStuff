@@ -1,35 +1,33 @@
 import { PrismaUserRepository } from '@/repositories/prisma-users-repository'
-import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists-error'
-import { RegisterUserUseCase } from '@/use-cases/registerUser'
+import { AuthenticateUseCase } from '@/use-cases/authenticate'
+import { InvalidCredentialsError } from '@/use-cases/errors/invalid-credentials-error'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-export async function registerUserController(
+export async function authenticateController(
     request: FastifyRequest,
     reply: FastifyReply
 ) {
-    const registerBodySchema = z.object({
-        name: z.string(),
+    const authenticateBodySchema = z.object({
         email: z.string().email(),
         password: z.string().min(6),
     })
 
-    const { name, email, password } = registerBodySchema.parse(request.body)
+    const { email, password } = authenticateBodySchema.parse(request.body)
 
     try {
         const prismaUserRepository = new PrismaUserRepository()
-        const registerUserUseCase = new RegisterUserUseCase(
+        const registerUserUseCase = new AuthenticateUseCase(
             prismaUserRepository
         )
 
         await registerUserUseCase.execute({
             email,
-            name,
             password,
         })
     } catch (error) {
-        if (error instanceof UserAlreadyExistsError) {
-            return reply.status(409).send({
+        if (error instanceof InvalidCredentialsError) {
+            return reply.status(400).send({
                 message: error.message,
             })
         }
@@ -37,5 +35,5 @@ export async function registerUserController(
         throw error
     }
 
-    return reply.status(201).send()
+    return reply.status(200).send()
 }
