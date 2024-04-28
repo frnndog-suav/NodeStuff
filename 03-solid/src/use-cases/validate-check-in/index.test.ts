@@ -1,0 +1,55 @@
+import { InMemoryCheckInsRepository } from '@/repositories/in-memory-check-ins-repository'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { ValidateCheckInUseCase } from '.'
+import { ResourceNotFoundError } from '../errors/resource-not-found-error'
+
+let inMemoryCheckInsRepository: InMemoryCheckInsRepository
+let validateCheckInUseCase: ValidateCheckInUseCase
+
+describe('ValidateCheckInUseCase', () => {
+    beforeEach(async () => {
+        inMemoryCheckInsRepository = new InMemoryCheckInsRepository()
+        validateCheckInUseCase = new ValidateCheckInUseCase(
+            inMemoryCheckInsRepository
+        )
+
+        // await inMemoryGymsRepository.create({
+        //     id: 'gym-id',
+        //     title: 'Nome da academia',
+        //     description: '',
+        //     phone: '',
+        //     latitude: 0,
+        //     longitude: 0,
+        // })
+
+        // vi.useFakeTimers()
+    })
+
+    // afterEach(() => {
+    //     vi.useRealTimers()
+    // })
+
+    it('should be able to validate the check-in', async () => {
+        const createdCheckIn = await inMemoryCheckInsRepository.create({
+            gym_id: 'gym-01',
+            user_id: 'user-01',
+        })
+
+        const { checkIn } = await validateCheckInUseCase.execute({
+            checkInId: createdCheckIn.id,
+        })
+
+        expect(checkIn.validated_at).toStrictEqual(expect.any(Date))
+        expect(inMemoryCheckInsRepository.items[0].validated_at).toStrictEqual(
+            expect.any(Date)
+        )
+    })
+
+    it('should be not able to validate an inexistent check-in', async () => {
+        await expect(() =>
+            validateCheckInUseCase.execute({
+                checkInId: 'inexistent-check-in-id',
+            })
+        ).rejects.toBeInstanceOf(ResourceNotFoundError)
+    })
+})
