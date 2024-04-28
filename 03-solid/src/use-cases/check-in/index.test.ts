@@ -3,14 +3,15 @@ import { InMemoryGymsRepository } from '@/repositories/in-memory-gyms-repository
 import { Decimal } from '@prisma/client/runtime/library'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { CheckInUseCase } from '.'
-import { ResourceNotFoundError } from '../errors/resource-not-found-error'
+import { MaxDistanceError } from '../errors/max-distance-error'
+import { MaxNumberOfCheckInsError } from '../errors/max-number-of-check-ins-error'
 
 let inMemoryCheckInsRepository: InMemoryCheckInsRepository
 let inMemoryGymsRepository: InMemoryGymsRepository
 let checkInUseCase: CheckInUseCase
 
 describe('CheckInUseCase', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
         inMemoryCheckInsRepository = new InMemoryCheckInsRepository()
         inMemoryGymsRepository = new InMemoryGymsRepository()
         checkInUseCase = new CheckInUseCase(
@@ -18,13 +19,13 @@ describe('CheckInUseCase', () => {
             inMemoryGymsRepository
         )
 
-        inMemoryGymsRepository.items.push({
+        await inMemoryGymsRepository.create({
             id: 'gym-id',
             title: 'Nome da academia',
             description: '',
             phone: '',
-            latitude: new Decimal(0),
-            longitude: new Decimal(0),
+            latitude: 0,
+            longitude: 0,
         })
 
         vi.useFakeTimers()
@@ -64,7 +65,7 @@ describe('CheckInUseCase', () => {
                 userLatitude: 0,
                 userLongitude: 0,
             })
-        ).rejects.toBeInstanceOf(ResourceNotFoundError)
+        ).rejects.toBeInstanceOf(MaxNumberOfCheckInsError)
     })
 
     it('should be able to check in twice but in different days', async () => {
@@ -90,10 +91,6 @@ describe('CheckInUseCase', () => {
     })
 
     it('should not be able to check in on distant gym', async () => {
-        //-23.4449708,-45.8948412
-
-        //-22.7429622,-44.6804006
-
         inMemoryGymsRepository.items.push({
             id: 'testing-id',
             title: 'Nome da academia',
@@ -110,6 +107,6 @@ describe('CheckInUseCase', () => {
                 userLatitude: -22.7429622,
                 userLongitude: -44.6804006,
             })
-        ).rejects.toBeInstanceOf(Error)
+        ).rejects.toBeInstanceOf(MaxDistanceError)
     })
 })
