@@ -22,6 +22,7 @@
     - `npm i bcryptjs` (lib para fazer hash)
     - `npm install --save @types/bcryptjs` 
     - `npm i dayjs` 
+    - `npm i @fastify/jwt` 
     - `npm install -D vitest` (lib de teste) 
     - `npm install -D npm i vite-tsconfig-paths` (completemento para lib de teste - reconhecimento dos paths - configurar arquivo "vite.config.ts" para funcionar)
 
