@@ -2,9 +2,9 @@ import { CheckInstRepository } from '@/repositories/check-ins-repository-interfa
 import { GymsRepository } from '@/repositories/gyms-repository'
 import { getDistanceBetweenCoordinate } from '@/utils/get-distance-between-coordinates'
 import { CheckIn } from '@prisma/client'
-import { MaxDistanceError } from '../errors/max-distance-error'
-import { MaxNumberOfCheckInsError } from '../errors/max-number-of-check-ins-error'
-import { ResourceNotFoundError } from '../errors/resource-not-found-error'
+import { MaxDistanceError } from '../_errors/max-distance-error'
+import { MaxNumberOfCheckInsError } from '../_errors/max-number-of-check-ins-error'
+import { ResourceNotFoundError } from '../_errors/resource-not-found-error'
 
 const MAX_KILOMETERS_DISTANCE_ALLOWED = 0.1
 
