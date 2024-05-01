@@ -13,23 +13,7 @@ describe('fetch nearby gyms controller', () => {
     })
 
     it('should be able to list nearby gyms', async () => {
-        const { token } = await createAndAuthenticateUser(app)
-
-        // await inMemoryGymsRepository.create({
-        //     title: 'Near Gym',
-        //     description: null,
-        //     latitude: -23.4449708,
-        //     longitude: -45.8948412,
-        //     phone: null,
-        // })
-
-        // await inMemoryGymsRepository.create({
-        //     title: 'Far Gym',
-        //     description: null,
-        //     latitude: -23.3114911,
-        //     longitude: -51.3632592,
-        //     phone: null,
-        // })
+        const { token } = await createAndAuthenticateUser(app, true)
 
         await request(app.server)
             .post('/gyms')
