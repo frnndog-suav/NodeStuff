@@ -24,6 +24,8 @@
     - `npm i dayjs` 
     - `npm i npm-run-all --save-dev` 
     - `npm i @fastify/jwt` 
+    - `npm install supertest --save-dev` 
+    - `npm install --save @types/supertest` 
     - `npm install -D vitest` (lib de teste) 
     - `npm install -D vite-tsconfig-paths` (completemento para lib de teste - reconhecimento dos paths - configurar arquivo "vite.config.ts" para funcionar)
 
