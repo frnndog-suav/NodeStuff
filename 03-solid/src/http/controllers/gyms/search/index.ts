@@ -20,5 +20,5 @@ export async function searchGymController(
         query: q,
     })
 
-    return reply.status(201).send({ gyms })
+    return reply.status(200).send({ gyms })
 }

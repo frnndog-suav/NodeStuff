@@ -3,7 +3,7 @@ import { createAndAuthenticateUser } from '@/utils/get-distance-between-coordina
 import request from 'supertest'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
-describe('profile controller', () => {
+describe('create gym controller', () => {
     beforeAll(async () => {
         await app.ready()
     })
@@ -12,19 +12,20 @@ describe('profile controller', () => {
         await app.close()
     })
 
-    it('should be able to get user profile', async () => {
+    it('should be able to create a gym', async () => {
         const { token } = await createAndAuthenticateUser(app)
 
-        const profileResponse = await request(app.server)
-            .get('/me')
+        const response = await request(app.server)
+            .post('/gyms')
             .set('Authorization', `Bearer ${token}`)
-            .send()
-
-        expect(profileResponse.statusCode).toStrictEqual(200)
-        expect(profileResponse.body.user).toStrictEqual(
-            expect.objectContaining({
-                email: 'teste.silva@gmail.com',
+            .send({
+                title: 'Typescript Gym',
+                description: 'Cool description',
+                phone: '123456789',
+                latitude: -23.4449708,
+                longitude: -45.8948412,
             })
-        )
+
+        expect(response.statusCode).toStrictEqual(201)
     })
 })
