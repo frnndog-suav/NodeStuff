@@ -7,3 +7,5 @@
 4 - Executar `npx tsc --init` para inicializar o typescript (criação do arquivo tsconfig.json)
 
 5 - No arquivo "tsconfig.json", substituir o valor de "target" de "es2016" para "ES2020"
+
+6 - Instalar vitest [`npm i vitest -D`]
