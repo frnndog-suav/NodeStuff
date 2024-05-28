@@ -1,4 +1,5 @@
 import { Answer } from '../../entities/answer'
+import { AnswersRepository } from '../../repositories/answers'
 
 export type TAnswerQuestionUseCaseRequest = {
     instructorId: string
@@ -7,7 +8,9 @@ export type TAnswerQuestionUseCaseRequest = {
 }
 
 export class AnswerQuestionUseCase {
-    execute({
+    constructor(private answersRepository: AnswersRepository) {}
+
+    async execute({
         instructorId,
         questionId,
         content,
@@ -17,6 +20,8 @@ export class AnswerQuestionUseCase {
             content,
             questionId,
         })
+
+        await this.answersRepository.create(answer)
 
         return answer
     }
