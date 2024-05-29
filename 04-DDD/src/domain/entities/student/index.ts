@@ -1,5 +1,4 @@
 import { Entity } from '../../../core/entities'
-import { Optional } from '../../../core/types/optional'
 import { UniqueEntityID } from '../value-objects/unique-entity-id'
 
 export type TStudentProps = {
