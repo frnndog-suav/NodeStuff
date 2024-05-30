@@ -1,5 +1,5 @@
-import { Answer } from '../../entities/answer'
-import { UniqueEntityID } from '../../entities/value-objects/unique-entity-id'
+import { Answer } from '../../../enterprise/entities/answer'
+import { UniqueEntityID } from '../../../enterprise/entities/value-objects/unique-entity-id'
 import { AnswersRepository } from '../../repositories/answers'
 
 export type TAnswerQuestionUseCaseRequest = {
