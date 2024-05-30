@@ -9,3 +9,5 @@
 5 - No arquivo "tsconfig.json", substituir o valor de "target" de "es2016" para "ES2020"
 
 6 - Instalar vitest [`npm i vitest -D`]
+
+7 - Instalar alias para caminhos de importações [`npm i vite-tsconfig-paths -D`]

@@ -1,8 +1,8 @@
+import { Entity } from '@/core/entities'
+import { Optional } from '@/core/types/optional'
 import dayjs from 'dayjs'
-import { Entity } from '../../../core/entities'
-import { Optional } from '../../../core/types/optional'
 import { Slug } from '../value-objects/slug'
-import { UniqueEntityID } from './../value-objects/unique-entity-id/index'
+import { UniqueEntityID } from '../value-objects/unique-entity-id'
 
 type TQuestionProps = {
     title: string
