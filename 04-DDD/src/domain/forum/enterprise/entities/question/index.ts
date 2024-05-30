@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { Slug } from '../value-objects/slug'
 import { UniqueEntityID } from '../value-objects/unique-entity-id'
 
-type TQuestionProps = {
+export type TQuestionProps = {
     title: string
     content: string
     authorId: UniqueEntityID
