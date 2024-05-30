@@ -11,3 +11,5 @@
 6 - Instalar vitest [`npm i vitest -D`]
 
 7 - Instalar alias para caminhos de importações [`npm i vite-tsconfig-paths -D`]
+
+8 - Instalar pacote para geração de dados fictícios [`npm i @faker-js/faker -D`]
