@@ -1,19 +1,23 @@
-import { Answer } from '@/domain/forum/enterprise/entities/answer'
+import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
 import { AnswerQuestionUseCase } from '.'
-import { AnswersRepository } from '../../repositories/answers'
 
-const fakeAnswersRepository: AnswersRepository = {
-    create: async (answer: Answer) => {},
-}
+let inMemoryRepository: InMemoryAnswersRepository
+let useCase: AnswerQuestionUseCase
 
-test('create an answer', async () => {
-    const answerQuestion = new AnswerQuestionUseCase(fakeAnswersRepository)
-
-    const answer = await answerQuestion.execute({
-        content: 'Answer A',
-        instructorId: '1',
-        questionId: '1',
+describe('[Use Case] - Create question', () => {
+    beforeEach(() => {
+        inMemoryRepository = new InMemoryAnswersRepository()
+        useCase = new AnswerQuestionUseCase(inMemoryRepository)
     })
 
-    expect(answer.content).toStrictEqual('Answer A')
+    it('should be able to create an answer', async () => {
+        const { answer } = await useCase.execute({
+            content: 'Answer A',
+            instructorId: '1',
+            questionId: '1',
+        })
+
+        expect(answer.id).toBeTruthy()
+        expect(inMemoryRepository.items[0].id).toStrictEqual(answer.id)
+    })
 })
