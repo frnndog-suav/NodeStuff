@@ -1,3 +1,4 @@
+import { Question } from '@/domain/forum/enterprise/entities/question'
 import { QuestionsRepository } from '../../repositories/question'
 
 export type TEditQuestionUseCaseRequest = {
@@ -5,6 +6,10 @@ export type TEditQuestionUseCaseRequest = {
     title: string
     content: string
     questionId: string
+}
+
+export type TEditQuestionUseCaseResponse = {
+    question: Question
 }
 
 export class EditQuestionUseCase {
@@ -15,7 +20,7 @@ export class EditQuestionUseCase {
         content,
         title,
         questionId,
-    }: TEditQuestionUseCaseRequest): Promise<void> {
+    }: TEditQuestionUseCaseRequest): Promise<TEditQuestionUseCaseResponse> {
         const question = await this.questionsRepository.findById(questionId)
 
         if (!question) {
@@ -30,5 +35,9 @@ export class EditQuestionUseCase {
         question.content = content
 
         await this.questionsRepository.save(question)
+
+        return {
+            question,
+        }
     }
 }
