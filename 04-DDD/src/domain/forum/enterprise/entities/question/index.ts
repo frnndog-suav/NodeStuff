@@ -44,11 +44,11 @@ export class Question extends Entity<TQuestionProps> {
     }
 
     set content(newContent: string) {
-        this.content = newContent
+        this.props.content = newContent
         this.touch()
     }
     set title(newTitle: string) {
-        this.title = newTitle
+        this.props.title = newTitle
         this.props.slug = Slug.createFromText(newTitle)
         this.touch()
     }
