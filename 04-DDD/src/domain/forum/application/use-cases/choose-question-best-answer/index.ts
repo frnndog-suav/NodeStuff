@@ -1,6 +1,6 @@
 import { Question } from '@/domain/forum/enterprise/entities/question'
 import { AnswersRepository } from '../../repositories/answers'
-import { QuestionsRepository } from '../../repositories/question'
+import { QuestionsRepository } from '../../repositories/questions'
 
 export type TChooseAnswerBestAnswerUseCaseRequest = {
     authorId: string

@@ -1,5 +1,5 @@
 import { Question } from '@/domain/forum/enterprise/entities/question'
-import { QuestionsRepository } from '../../repositories/question'
+import { QuestionsRepository } from '../../repositories/questions'
 
 export type TFetchRecentQuestionsUseCaseRequest = {
     page: number

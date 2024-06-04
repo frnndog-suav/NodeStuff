@@ -1,6 +1,6 @@
 import { Question } from '@/domain/forum/enterprise/entities/question'
 import { UniqueEntityID } from '@/domain/forum/enterprise/entities/value-objects/unique-entity-id'
-import { QuestionsRepository } from '../../repositories/question'
+import { QuestionsRepository } from '../../repositories/questions'
 
 export type TCreateQuestionUseCaseRequest = {
     authorId: string

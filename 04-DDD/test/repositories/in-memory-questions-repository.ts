@@ -1,5 +1,5 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
-import { QuestionsRepository } from '@/domain/forum/application/repositories/question'
+import { QuestionsRepository } from '@/domain/forum/application/repositories/questions'
 import { Question } from '@/domain/forum/enterprise/entities/question'
 
 const ITEMS_PER_PAGE = 20

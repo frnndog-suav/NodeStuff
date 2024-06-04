@@ -1,4 +1,4 @@
-import { QuestionsRepository } from '../../repositories/question'
+import { QuestionsRepository } from '../../repositories/questions'
 
 export type TDeleteQuestionUseCaseRequest = {
     questionId: string
