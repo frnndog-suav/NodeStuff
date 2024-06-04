@@ -31,7 +31,7 @@ export class InMemoryAnswersRepository implements AnswersRepository {
         this.items[itemIndex] = answer
     }
 
-    async findManyByQuestionId(
+    async findManyByAnswerId(
         questionId: string,
         { page }: PaginationParams
     ): Promise<Answer[]> {
