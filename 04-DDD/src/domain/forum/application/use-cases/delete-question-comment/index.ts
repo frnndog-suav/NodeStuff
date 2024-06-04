@@ -1,4 +1,4 @@
-import { QuestionsCommentRepository } from '../../repositories/questions-comment'
+import { QuestionCommentsRepository } from '../../repositories/questions-comment'
 
 export type TDeleteCommentOnQuestionUseCaseRequest = {
     authorId: string
@@ -9,7 +9,7 @@ export type TDeleteCommentOnQuestionUseCaseResponse = {}
 
 export class DeleteCommentOnQuestionUseCase {
     constructor(
-        private questionsCommentRepository: QuestionsCommentRepository
+        private questionsCommentRepository: QuestionCommentsRepository
     ) {}
 
     async execute({

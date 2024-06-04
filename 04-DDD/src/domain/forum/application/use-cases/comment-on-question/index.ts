@@ -1,7 +1,7 @@
 import { QuestionComment } from '@/domain/forum/enterprise/entities/comment/question-comment'
 import { UniqueEntityID } from '@/domain/forum/enterprise/entities/value-objects/unique-entity-id'
 import { QuestionsRepository } from '../../repositories/questions'
-import { QuestionsCommentRepository } from '../../repositories/questions-comment'
+import { QuestionCommentsRepository } from '../../repositories/questions-comment'
 
 export type TCommentOnQuestionUseCaseRequest = {
     authorId: string
@@ -16,7 +16,7 @@ export type TCommentOnQuestionUseCaseResponse = {
 export class CommentOnQuestionUseCase {
     constructor(
         private questionsRepository: QuestionsRepository,
-        private questionsCommentRepository: QuestionsCommentRepository
+        private questionsCommentRepository: QuestionCommentsRepository
     ) {}
 
     async execute({

@@ -7,6 +7,10 @@ export type TQuestionCommentProps = TCommentProps & {
 }
 
 export class QuestionComment extends Comment<TQuestionCommentProps> {
+    get questionId() {
+        return this.props.questionId
+    }
+
     static create(
         props: Optional<TQuestionCommentProps, 'createdAt'>,
         id?: UniqueEntityID
