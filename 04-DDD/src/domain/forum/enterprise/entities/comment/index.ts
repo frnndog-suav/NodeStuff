@@ -1,16 +1,16 @@
 import { Entity } from '@/core/entities'
-import { Optional } from '@/core/types/optional'
 import { UniqueEntityID } from '../value-objects/unique-entity-id'
 
-export type TQuestionCommentProps = {
+export type TCommentProps = {
     authorId: UniqueEntityID
-    questionId: UniqueEntityID
     content: string
     createdAt: Date
     updatedAt?: Date
 }
 
-export class QuestionComment extends Entity<TQuestionCommentProps> {
+export abstract class Comment<
+    Props extends TCommentProps,
+> extends Entity<Props> {
     get content() {
         return this.props.content
     }
@@ -30,20 +30,6 @@ export class QuestionComment extends Entity<TQuestionCommentProps> {
     set content(newContent: string) {
         this.props.content = newContent
         this.touch()
-    }
-
-    static create(
-        props: Optional<TQuestionCommentProps, 'createdAt'>,
-        id?: UniqueEntityID
-    ) {
-        const questionComment = new QuestionComment(
-            {
-                ...props,
-                createdAt: props.createdAt ?? new Date(),
-            },
-            id
-        )
-        return questionComment
     }
 
     private touch() {
