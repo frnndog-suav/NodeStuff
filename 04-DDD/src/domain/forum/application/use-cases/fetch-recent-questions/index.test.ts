@@ -22,11 +22,11 @@ describe('[Use Case] - Fetch recent questions', () => {
             makeQuestion({ createdAt: new Date(2022, 0, 23) })
         )
 
-        const { questions } = await useCase.execute({
+        const result = await useCase.execute({
             page: 1,
         })
 
-        expect(questions).toStrictEqual([
+        expect(result.value?.questions).toStrictEqual([
             expect.objectContaining({ createdAt: new Date(2022, 0, 23) }),
             expect.objectContaining({ createdAt: new Date(2022, 0, 20) }),
             expect.objectContaining({ createdAt: new Date(2022, 0, 18) }),
@@ -38,10 +38,10 @@ describe('[Use Case] - Fetch recent questions', () => {
             await inMemoryRepository.create(makeQuestion())
         }
 
-        const { questions } = await useCase.execute({
+        const result = await useCase.execute({
             page: 2,
         })
 
-        expect(questions).toHaveLength(2)
+        expect(result.value?.questions).toHaveLength(2)
     })
 })

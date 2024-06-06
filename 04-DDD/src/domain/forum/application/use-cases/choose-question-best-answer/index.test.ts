@@ -1,9 +1,10 @@
+import { UniqueEntityID } from '@/domain/forum/enterprise/entities/value-objects/unique-entity-id'
 import { makeAnswer } from 'test/factories/make-answer'
 import { makeQuestion } from 'test/factories/make-question'
 import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { ChooseAnswerBestAnswerUseCase } from '.'
-import { UniqueEntityID } from '@/domain/forum/enterprise/entities/value-objects/unique-entity-id'
+import { NotAllowedError } from '../_errors/not-allowed-error'
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
@@ -49,11 +50,12 @@ describe('[Use Case] - Choose question best answer', () => {
         await inMemoryQuestionsRepository.create(question)
         await inMemoryAnswersRepository.create(answer)
 
-        await expect(() => {
-            return useCase.execute({
-                answerId: answer.id.toString(),
-                authorId: 'author-2',
-            })
-        }).rejects.toBeInstanceOf(Error)
+        const result = await useCase.execute({
+            answerId: answer.id.toString(),
+            authorId: 'author-2',
+        })
+
+        expect(result.isLeft()).toBe(true)
+        expect(result.value).toBeInstanceOf(NotAllowedError)
     })
 })

@@ -7,7 +7,7 @@ import { NotAllowedError } from '../_errors/not-allowed-error'
 let inMemoryAnswersCommentRepository: InMemoryAnswersCommentRepository
 let useCase: DeleteCommentOnAnswerUseCase
 
-describe('[Use Case] - Delete on answer', () => {
+describe('[Use Case] - Delete answer on comment', () => {
     beforeEach(() => {
         inMemoryAnswersCommentRepository =
             new InMemoryAnswersCommentRepository()

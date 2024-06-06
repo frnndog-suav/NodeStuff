@@ -2,6 +2,7 @@ import { UniqueEntityID } from '@/domain/forum/enterprise/entities/value-objects
 import { makeAnswer } from 'test/factories/make-answer'
 import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
 import { DeleteAnswerUseCase } from '.'
+import { NotAllowedError } from '../_errors/not-allowed-error'
 
 let inMemoryRepository: InMemoryAnswersRepository
 let useCase: DeleteAnswerUseCase
@@ -40,11 +41,12 @@ describe('[Use Case] - Delete answer', () => {
 
         inMemoryRepository.create(newAnswer)
 
-        await expect(() => {
-            return useCase.execute({
-                answerId: 'answer-1',
-                authorId: 'author-1',
-            })
-        }).rejects.toBeInstanceOf(Error)
+        const result = await useCase.execute({
+            answerId: 'answer-1',
+            authorId: 'author-1',
+        })
+
+        expect(result.isLeft()).toBe(true)
+        expect(result.value).toBeInstanceOf(NotAllowedError)
     })
 })
