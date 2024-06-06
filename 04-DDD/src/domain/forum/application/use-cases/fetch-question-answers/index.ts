@@ -1,3 +1,4 @@
+import { Either, right } from '@/core/error/either'
 import { Answer } from '@/domain/forum/enterprise/entities/answer'
 import { AnswersRepository } from '../../repositories/answers'
 
@@ -6,9 +7,12 @@ export type TFetchQuestionAnswersUseCaseRequest = {
     questionId: string
 }
 
-export type TFetchQuestionAnswersUseCaseResponse = {
-    answers: Answer[]
-}
+export type TFetchQuestionAnswersUseCaseResponse = Either<
+    null,
+    {
+        answers: Answer[]
+    }
+>
 
 export class FetchQuestionAnswersUseCase {
     constructor(private answersRepository: AnswersRepository) {}
@@ -24,8 +28,8 @@ export class FetchQuestionAnswersUseCase {
             }
         )
 
-        return {
+        return right({
             answers,
-        }
+        })
     }
 }

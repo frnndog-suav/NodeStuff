@@ -1,15 +1,21 @@
+import { Either, left, right } from '@/core/error/either'
 import { Question } from '@/domain/forum/enterprise/entities/question'
 import { AnswersRepository } from '../../repositories/answers'
 import { QuestionsRepository } from '../../repositories/questions'
+import { NotAllowedError } from '../_errors/not-allowed-error'
+import { ResourceNotFoundError } from '../_errors/resource-not-found'
 
 export type TChooseAnswerBestAnswerUseCaseRequest = {
     authorId: string
     answerId: string
 }
 
-export type TChooseAnswerBestAnswerUseCaseResponse = {
-    question: Question
-}
+export type TChooseAnswerBestAnswerUseCaseResponse = Either<
+    ResourceNotFoundError | NotAllowedError,
+    {
+        question: Question
+    }
+>
 
 export class ChooseAnswerBestAnswerUseCase {
     constructor(
@@ -24,7 +30,7 @@ export class ChooseAnswerBestAnswerUseCase {
         const answer = await this.answersRepository.findById(answerId)
 
         if (!answer) {
-            throw new Error('Answer not found.')
+            return left(new ResourceNotFoundError())
         }
 
         const question = await this.questionsRepository.findById(
@@ -32,19 +38,19 @@ export class ChooseAnswerBestAnswerUseCase {
         )
 
         if (!question) {
-            throw new Error('Question not found.')
+            return left(new ResourceNotFoundError())
         }
 
         if (authorId !== question.authorId.toString()) {
-            throw new Error('Not allowed.')
+            return left(new NotAllowedError())
         }
 
         question.bestAnswerID = answer.id
 
         await this.questionsRepository.save(question)
 
-        return {
+        return right({
             question,
-        }
+        })
     }
 }

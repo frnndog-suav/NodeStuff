@@ -1,5 +1,8 @@
+import { Either, left, right } from '@/core/error/either'
 import { Answer } from '@/domain/forum/enterprise/entities/answer'
 import { AnswersRepository } from '../../repositories/answers'
+import { NotAllowedError } from '../_errors/not-allowed-error'
+import { ResourceNotFoundError } from '../_errors/resource-not-found'
 
 export type TEditAnswerUseCaseRequest = {
     authorId: string
@@ -7,9 +10,12 @@ export type TEditAnswerUseCaseRequest = {
     answerId: string
 }
 
-export type TEditAnswerUseCaseResponse = {
-    answer: Answer
-}
+export type TEditAnswerUseCaseResponse = Either<
+    ResourceNotFoundError | NotAllowedError,
+    {
+        answer: Answer
+    }
+>
 
 export class EditAnswerUseCase {
     constructor(private answersRepository: AnswersRepository) {}
@@ -22,19 +28,19 @@ export class EditAnswerUseCase {
         const answer = await this.answersRepository.findById(answerId)
 
         if (!answer) {
-            throw new Error('Question not found.')
+            return left(new ResourceNotFoundError())
         }
 
         if (authorId !== answer.authorId.toString()) {
-            throw new Error('Not allowed')
+            return left(new NotAllowedError())
         }
 
         answer.content = content
 
         await this.answersRepository.save(answer)
 
-        return {
+        return right({
             answer,
-        }
+        })
     }
 }
