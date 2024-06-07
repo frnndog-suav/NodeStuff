@@ -1,4 +1,4 @@
-import { Entity } from '@/core/entities'
+import { AggregateRoot } from '@/core/pattern/aggregate-root'
 import { Optional } from '@/core/types/optional'
 import dayjs from 'dayjs'
 import { Slug } from '../value-objects/slug'
@@ -14,7 +14,7 @@ export type TQuestionProps = {
     updatedAt?: Date
 }
 
-export class Question extends Entity<TQuestionProps> {
+export class Question extends AggregateRoot<TQuestionProps> {
     get title() {
         return this.props.title
     }
