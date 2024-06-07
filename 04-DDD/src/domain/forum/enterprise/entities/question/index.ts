@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@/core/pattern/aggregate-root'
 import { Optional } from '@/core/types/optional'
 import dayjs from 'dayjs'
+import { QuestionAttachment } from '../attachment/question-attachment'
 import { Slug } from '../value-objects/slug'
 import { UniqueEntityID } from '../value-objects/unique-entity-id'
 
@@ -11,6 +12,7 @@ export type TQuestionProps = {
     slug: Slug
     bestAnswerID?: UniqueEntityID
     createdAt: Date
+    attachments: QuestionAttachment[]
     updatedAt?: Date
 }
 
@@ -42,6 +44,9 @@ export class Question extends AggregateRoot<TQuestionProps> {
     get excerpt() {
         return this.content.substring(0, 120).trimEnd().concat('...')
     }
+    get attachments() {
+        return this.props.attachments
+    }
 
     set content(newContent: string) {
         this.props.content = newContent
@@ -56,9 +61,12 @@ export class Question extends AggregateRoot<TQuestionProps> {
         this.props.bestAnswerID = newBestAnswerID
         this.touch()
     }
+    set attachments(attachments: QuestionAttachment[]) {
+        this.props.attachments = attachments
+    }
 
     static create(
-        props: Optional<TQuestionProps, 'createdAt' | 'slug'>,
+        props: Optional<TQuestionProps, 'createdAt' | 'slug' | 'attachments'>,
         id?: UniqueEntityID
     ) {
         const question = new Question(
@@ -66,6 +74,7 @@ export class Question extends AggregateRoot<TQuestionProps> {
                 ...props,
                 createdAt: props.createdAt ?? new Date(),
                 slug: props.slug ?? Slug.createFromText(props.title),
+                attachments: props.attachments ?? [],
             },
             id
         )

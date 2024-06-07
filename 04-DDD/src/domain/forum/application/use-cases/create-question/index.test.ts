@@ -15,12 +15,14 @@ describe('[Use Case] - Create question', () => {
             authorId: '1',
             content: 'content',
             title: 'title',
-
+            attachmentsId: ['1', '2'],
         })
 
         expect(result.isRight()).toBe(true)
         expect(inMemoryRepository.items[0].id).toStrictEqual(
             result.value?.question.id
         )
+
+        expect(inMemoryRepository.items[0].attachments).toHaveLength(2)
     })
 })

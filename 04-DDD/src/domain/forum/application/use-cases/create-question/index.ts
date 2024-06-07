@@ -1,12 +1,14 @@
+import { Either, right } from '@/core/error/either'
+import { QuestionAttachment } from '@/domain/forum/enterprise/entities/attachment/question-attachment'
 import { Question } from '@/domain/forum/enterprise/entities/question'
 import { UniqueEntityID } from '@/domain/forum/enterprise/entities/value-objects/unique-entity-id'
 import { QuestionsRepository } from '../../repositories/questions'
-import { Either, right } from '@/core/error/either'
 
 export type TCreateQuestionUseCaseRequest = {
     authorId: string
     title: string
     content: string
+    attachmentsId: string[]
 }
 
 export type TCreateQuestionUseCaseResponse = Either<
@@ -23,12 +25,22 @@ export class CreateQuestionUseCase {
         authorId,
         content,
         title,
+        attachmentsId,
     }: TCreateQuestionUseCaseRequest): Promise<TCreateQuestionUseCaseResponse> {
         const question = Question.create({
             authorId: new UniqueEntityID(authorId),
             title,
             content,
         })
+
+        const questionAttachments = attachmentsId.map((attachmentId) => {
+            return QuestionAttachment.create({
+                attachmentId,
+                questionId: question.id.toString(),
+            })
+        })
+
+        question.attachments = questionAttachments
 
         await this.questionsRepository.create(question)
 
