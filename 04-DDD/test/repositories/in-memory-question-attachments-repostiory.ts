@@ -15,4 +15,12 @@ export class InMemoryQuestionsAttachmentRepository
 
         return questionAttachments
     }
+
+    async deleteManyByQuestionId(questionId: string): Promise<void> {
+        const questionAttachments = this.items.filter(
+            (item) => item.questionId.toString() !== questionId
+        )
+
+        this.items = questionAttachments
+    }
 }
