@@ -1,6 +1,7 @@
 import { Either, left, right } from '@/core/error/either'
 import { QuestionAttachment } from '@/domain/forum/enterprise/entities/attachment/question-attachment'
 import { Question } from '@/domain/forum/enterprise/entities/question'
+import { UniqueEntityID } from '@/domain/forum/enterprise/entities/value-objects/unique-entity-id'
 import { QuestionAttachmentList } from '@/domain/forum/enterprise/entities/watched-list/question'
 import { QuestionAttachmentRepository } from '../../repositories/question-attachments'
 import { QuestionsRepository } from '../../repositories/questions'
@@ -56,8 +57,8 @@ export class EditQuestionUseCase {
 
         const newQuestionAttachments = attachmentsId.map((attachmentId) => {
             return QuestionAttachment.create({
-                attachmentId,
-                questionId: question.id.toString(),
+                attachmentId: new UniqueEntityID(attachmentId),
+                questionId: question.id,
             })
         })
 

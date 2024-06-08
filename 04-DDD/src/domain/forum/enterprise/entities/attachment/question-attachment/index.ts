@@ -1,9 +1,9 @@
 import { Entity } from '@/core/entities'
 import { UniqueEntityID } from '../../value-objects/unique-entity-id'
 
-type TQuestionAttachmentProps = {
-    questionId: string
-    attachmentId: string
+export type TQuestionAttachmentProps = {
+    questionId: UniqueEntityID
+    attachmentId: UniqueEntityID
 }
 
 export class QuestionAttachment extends Entity<TQuestionAttachmentProps> {
