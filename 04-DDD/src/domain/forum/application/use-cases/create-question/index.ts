@@ -2,6 +2,7 @@ import { Either, right } from '@/core/error/either'
 import { QuestionAttachment } from '@/domain/forum/enterprise/entities/attachment/question-attachment'
 import { Question } from '@/domain/forum/enterprise/entities/question'
 import { UniqueEntityID } from '@/domain/forum/enterprise/entities/value-objects/unique-entity-id'
+import { QuestionAttachmentList } from '@/domain/forum/enterprise/entities/watched-list/question'
 import { QuestionsRepository } from '../../repositories/questions'
 
 export type TCreateQuestionUseCaseRequest = {
@@ -40,7 +41,7 @@ export class CreateQuestionUseCase {
             })
         })
 
-        question.attachments = questionAttachments
+        question.attachments = new QuestionAttachmentList(questionAttachments)
 
         await this.questionsRepository.create(question)
 

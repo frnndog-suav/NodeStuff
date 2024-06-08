@@ -22,7 +22,8 @@ describe('[Use Case] - Create question', () => {
         expect(inMemoryRepository.items[0].id).toStrictEqual(
             result.value?.question.id
         )
-
-        expect(inMemoryRepository.items[0].attachments).toHaveLength(2)
+        expect(
+            inMemoryRepository.items[0].attachments.currentItems
+        ).toHaveLength(2)
     })
 })
