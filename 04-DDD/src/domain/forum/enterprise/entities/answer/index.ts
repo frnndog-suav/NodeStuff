@@ -1,5 +1,6 @@
-import { Entity } from '@/core/entities'
+import { AggregateRoot } from '@/core/pattern/aggregate-root'
 import { Optional } from '@/core/types/optional'
+import { AnswerCreatedEvent } from '../events/answer-created-event'
 import { UniqueEntityID } from '../value-objects/unique-entity-id'
 import { AnswerAttachmentList } from '../watched-list/answer'
 
@@ -12,7 +13,7 @@ export type TAnswerProps = {
     updatedAt?: Date
 }
 
-export class Answer extends Entity<TAnswerProps> {
+export class Answer extends AggregateRoot<TAnswerProps> {
     get content() {
         return this.props.content
     }
@@ -56,6 +57,13 @@ export class Answer extends Entity<TAnswerProps> {
             },
             id
         )
+
+        const isNewAnswer = !id
+
+        if (isNewAnswer) {
+            answer.addDomainEvent(new AnswerCreatedEvent(answer))
+        }
+
         return answer
     }
 
