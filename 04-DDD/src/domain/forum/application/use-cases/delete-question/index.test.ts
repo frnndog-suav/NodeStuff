@@ -1,7 +1,7 @@
 import { UniqueEntityID } from '@/domain/forum/enterprise/entities/value-objects/unique-entity-id'
 import { makeQuestion } from 'test/factories/make-question'
 import { makeQuestionAttachment } from 'test/factories/make-question-attachment'
-import { InMemoryQuestionsAttachmentRepository } from 'test/repositories/in-memory-question-attachments-repostiory'
+import { InMemoryQuestionsAttachmentRepository } from 'test/repositories/in-memory-question-attachments-repository'
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { DeleteQuestionUseCase } from '.'
 import { NotAllowedError } from '../_errors/not-allowed-error'
