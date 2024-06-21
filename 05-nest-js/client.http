@@ -1,4 +1,5 @@
 @baseUrl = http://localhost:3333
+@authToken = {{authenticate.response.body.access_token}}
 
 # @name create_account
 
@@ -17,6 +18,19 @@ Content-Type: application/json
 
 POST {{baseUrl}}/sessions
 Content-Type: application/json
+
+{
+    "email": "novo.usuario@gmail.com",
+    "password": "123"
+}
+
+### 
+
+# @name create question
+
+POST {{baseUrl}}/questions
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
 
 {
     "email": "novo.usuario@gmail.com",
