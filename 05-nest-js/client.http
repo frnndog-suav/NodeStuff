@@ -33,6 +33,14 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    "email": "novo.usuario@gmail.com",
-    "password": "123"
+    "title": "Criando uma nova pergunta 2",
+    "content": "hello world"
 }
+
+### 
+
+# @name fetch recent questions
+
+GET {{baseUrl}}/questions?page=2
+Content-Type: application/json
+Authorization: Bearer {{authToken}}

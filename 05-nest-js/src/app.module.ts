@@ -4,9 +4,10 @@ import { ConfigModule } from '@nestjs/config'
 import { AuthModule } from './auth/auth.module'
 import { AuthenticationController } from './controllers/authentication-controller/index.controller'
 import { CreateAccountController } from './controllers/create-account/index.controller'
+import { CreateQuestionController } from './controllers/create-question-controller/index.controller'
+import { FetchRecentQuestionsController } from './controllers/fetch-recent-questions/index.controller'
 import { envSchema } from './env'
 import { PrismaService } from './prisma/prisma.service'
-import { CreateQuestionController } from './controllers/create-question-controller/index.controller'
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { CreateQuestionController } from './controllers/create-question-controll
     CreateAccountController,
     AuthenticationController,
     CreateQuestionController,
+    FetchRecentQuestionsController,
   ],
   providers: [PrismaService],
 })
