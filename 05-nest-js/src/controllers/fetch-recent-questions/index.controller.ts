@@ -15,7 +15,7 @@ type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>
 
 const queryValidationPipe = new ZodValidationPipe(pageQueryParamSchema)
 
-const ITEMS_PER_PAGE = 1
+const ITEMS_PER_PAGE = 20
 
 @Controller('/questions')
 @UseGuards(AuthGuard('jwt'))
@@ -32,6 +32,6 @@ export class FetchRecentQuestionsController {
       },
     })
 
-    return questions
+    return { questions }
   }
 }
