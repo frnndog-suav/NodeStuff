@@ -9,6 +9,7 @@ export class PrismaAnswersAttachmentsRepository
   findManyByAnswerId(answerId: string): Promise<AnswerAttachment[]> {
     throw new Error('Method not implemented.')
   }
+
   deleteManyByAnswerId(answerId: string): Promise<void> {
     throw new Error('Method not implemented.')
   }

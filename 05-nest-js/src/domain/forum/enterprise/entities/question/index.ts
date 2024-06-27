@@ -11,7 +11,7 @@ export type TQuestionProps = {
   content: string
   authorId: UniqueEntityID
   slug: Slug
-  bestAnswerID?: UniqueEntityID
+  bestAnswerID?: UniqueEntityID | null
   createdAt: Date
   attachments: QuestionAttachmentList
   updatedAt?: Date | null
@@ -69,17 +69,18 @@ export class Question extends AggregateRoot<TQuestionProps> {
     this.touch()
   }
 
-  set bestAnswerID(newBestAnswerID: UniqueEntityID | undefined) {
+  set bestAnswerID(newBestAnswerID: UniqueEntityID | undefined | null) {
     if (!newBestAnswerID) {
       return
     }
 
     if (
       this.props.bestAnswerID === undefined ||
+      this.props.bestAnswerID === null ||
       !this.props.bestAnswerID.equals(newBestAnswerID)
     ) {
       this.addDomainEvent(
-        new QuestionBestAnswerChosenEvent(this, newBestAnswerID)
+        new QuestionBestAnswerChosenEvent(this, newBestAnswerID),
       )
     }
 
@@ -94,7 +95,7 @@ export class Question extends AggregateRoot<TQuestionProps> {
 
   static create(
     props: Optional<TQuestionProps, 'createdAt' | 'slug' | 'attachments'>,
-    id?: UniqueEntityID
+    id?: UniqueEntityID,
   ) {
     const question = new Question(
       {
@@ -103,7 +104,7 @@ export class Question extends AggregateRoot<TQuestionProps> {
         slug: props.slug ?? Slug.createFromText(props.title),
         attachments: props.attachments ?? new QuestionAttachmentList(),
       },
-      id
+      id,
     )
 
     return question
