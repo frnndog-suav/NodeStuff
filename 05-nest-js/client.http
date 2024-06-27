@@ -33,7 +33,7 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    "title": "Criando uma nova pergunta 2",
+    "title": "Minha nova pergunta [27/06/2024]",
     "content": "hello world"
 }
 

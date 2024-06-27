@@ -4,6 +4,7 @@ import { Question } from '@/domain/forum/enterprise/entities/question'
 import { UniqueEntityID } from '@/domain/forum/enterprise/entities/value-objects/unique-entity-id'
 import { QuestionAttachmentList } from '@/domain/forum/enterprise/entities/watched-list/question'
 import { QuestionsRepository } from '../../repositories/questions'
+import { Injectable } from '@nestjs/common'
 
 export type TCreateQuestionUseCaseRequest = {
   authorId: string
@@ -19,6 +20,7 @@ export type TCreateQuestionUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class CreateQuestionUseCase {
   constructor(private questionsRepository: QuestionsRepository) {}
 
