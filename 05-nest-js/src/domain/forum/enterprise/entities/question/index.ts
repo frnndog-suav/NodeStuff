@@ -14,7 +14,7 @@ export type TQuestionProps = {
   bestAnswerID?: UniqueEntityID
   createdAt: Date
   attachments: QuestionAttachmentList
-  updatedAt?: Date
+  updatedAt?: Date | null
 }
 
 export class Question extends AggregateRoot<TQuestionProps> {
@@ -79,7 +79,7 @@ export class Question extends AggregateRoot<TQuestionProps> {
       !this.props.bestAnswerID.equals(newBestAnswerID)
     ) {
       this.addDomainEvent(
-        new QuestionBestAnswerChosenEvent(this, newBestAnswerID),
+        new QuestionBestAnswerChosenEvent(this, newBestAnswerID)
       )
     }
 
@@ -94,7 +94,7 @@ export class Question extends AggregateRoot<TQuestionProps> {
 
   static create(
     props: Optional<TQuestionProps, 'createdAt' | 'slug' | 'attachments'>,
-    id?: UniqueEntityID,
+    id?: UniqueEntityID
   ) {
     const question = new Question(
       {
@@ -103,7 +103,7 @@ export class Question extends AggregateRoot<TQuestionProps> {
         slug: props.slug ?? Slug.createFromText(props.title),
         attachments: props.attachments ?? new QuestionAttachmentList(),
       },
-      id,
+      id
     )
 
     return question
