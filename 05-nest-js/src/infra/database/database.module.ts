@@ -1,4 +1,5 @@
 import { QuestionsRepository } from '@/domain/forum/application/repositories/questions'
+import { StudentsRepository } from '@/domain/forum/application/repositories/students-repository'
 import { Module } from '@nestjs/common'
 import { PrismaService } from './prisma/prisma.service'
 import { PrismaAnswersAttachmentsRepository } from './prisma/repositories/prisma-answers-attachments-repository'
@@ -7,6 +8,7 @@ import { PrismaAnswersRepository } from './prisma/repositories/prisma-answers-re
 import { PrismaQuestionsAttachmentsRepository } from './prisma/repositories/prisma-questions-attachments-repository'
 import { PrismaQuestionsCommentsRepository } from './prisma/repositories/prisma-questions-comments-repository'
 import { PrismaQuestionsRepository } from './prisma/repositories/prisma-questions-repository'
+import { PrismaStudentsRepository } from './prisma/repositories/prisma-students-repository'
 
 @Module({
   providers: [
@@ -14,6 +16,10 @@ import { PrismaQuestionsRepository } from './prisma/repositories/prisma-question
     {
       provide: QuestionsRepository,
       useClass: PrismaQuestionsRepository,
+    },
+    {
+      provide: StudentsRepository,
+      useClass: PrismaStudentsRepository,
     },
     PrismaQuestionsCommentsRepository,
     PrismaQuestionsAttachmentsRepository,
@@ -29,6 +35,7 @@ import { PrismaQuestionsRepository } from './prisma/repositories/prisma-question
     PrismaAnswersRepository,
     PrismaAnswersCommentsRepository,
     PrismaAnswersAttachmentsRepository,
+    StudentsRepository,
   ],
 })
 export class DataBaseModule {}
