@@ -1,6 +1,7 @@
 import { AuthenticateStudentUseCase } from '@/domain/forum/application/use-cases/authenticate-student'
 import { CreateQuestionUseCase } from '@/domain/forum/application/use-cases/create-question'
 import { FetchRecentQuestionsUseCase } from '@/domain/forum/application/use-cases/fetch-recent-questions'
+import { GetQuestionBySlugUseCase } from '@/domain/forum/application/use-cases/get-question-by-slug'
 import { RegisterStudentUseCase } from '@/domain/forum/application/use-cases/register-student'
 import { Module } from '@nestjs/common'
 import { CryptographyModule } from '../cryptography/cryptography.module'
@@ -9,6 +10,7 @@ import { AuthenticationController } from './controllers/authentication-controlle
 import { CreateAccountController } from './controllers/create-account/index.controller'
 import { CreateQuestionController } from './controllers/create-question-controller/index.controller'
 import { FetchRecentQuestionsController } from './controllers/fetch-recent-questions/index.controller'
+import { GetQuestionBySlugController } from './controllers/get-question-by-slug/index.controller'
 
 @Module({
   controllers: [
@@ -16,6 +18,7 @@ import { FetchRecentQuestionsController } from './controllers/fetch-recent-quest
     AuthenticationController,
     CreateQuestionController,
     FetchRecentQuestionsController,
+    GetQuestionBySlugController,
   ],
   imports: [DataBaseModule, CryptographyModule],
   providers: [
@@ -23,6 +26,7 @@ import { FetchRecentQuestionsController } from './controllers/fetch-recent-quest
     FetchRecentQuestionsUseCase,
     AuthenticateStudentUseCase,
     RegisterStudentUseCase,
+    GetQuestionBySlugUseCase,
   ],
 })
 export class HttpModule {}

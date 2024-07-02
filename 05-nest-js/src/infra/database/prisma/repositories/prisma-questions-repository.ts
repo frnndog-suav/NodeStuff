@@ -20,18 +20,18 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
   }
 
   async findBySlug(slug: string): Promise<Question | null> {
-    // const question = await this.prisma.question.findUnique({
-    //   where: {
-    //     slug,
-    //   },
-    // })
+    const question = await this.prisma.question.findUnique({
+      where: {
+        slug
+      },
+    })
 
-    // if (!question) {
-    //   return null
-    // }
+    if (!question) {
+      return null
+    }
 
-    // return PrismaQuestionMapper.toDomain(question)
-    throw new Error('Method not implemented.')
+    return PrismaQuestionMapper.toDomain(question)
+    // throw new Error('Method not implemented.')
   }
 
   async findById(id: string): Promise<Question | null> {
