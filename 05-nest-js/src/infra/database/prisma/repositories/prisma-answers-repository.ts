@@ -2,29 +2,70 @@ import { PaginationParams } from '@/core/repositories/pagination-params'
 import { AnswersRepository } from '@/domain/forum/application/repositories/answers'
 import { Answer } from '@/domain/forum/enterprise/entities/answer'
 import { Injectable } from '@nestjs/common'
+import { PrismaAnswerMapper } from '../mappers/prisma-answer-mapper'
+import { PrismaService } from '../prisma.service'
+
+const ITEMS_PER_PAGE = 20
 
 @Injectable()
 export class PrismaAnswersRepository implements AnswersRepository {
-  create(answer: Answer): Promise<void> {
-    throw new Error('Method not implemented.')
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(answer: Answer): Promise<void> {
+    const data = PrismaAnswerMapper.toPrisma(answer)
+
+    await this.prisma.answer.create({
+      data,
+    })
   }
 
-  findById(id: string): Promise<Answer | null> {
-    throw new Error('Method not implemented.')
+  async findById(id: string): Promise<Answer | null> {
+    const answer = await this.prisma.answer.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    if (!answer) {
+      return null
+    }
+
+    return PrismaAnswerMapper.toDomain(answer)
   }
 
-  delete(answer: Answer): Promise<void> {
-    throw new Error('Method not implemented.')
+  async delete(answer: Answer): Promise<void> {
+    await this.prisma.answer.delete({
+      where: {
+        id: answer.id.toString(),
+      },
+    })
   }
 
-  save(answer: Answer): Promise<void> {
-    throw new Error('Method not implemented.')
+  async save(answer: Answer): Promise<void> {
+    const data = PrismaAnswerMapper.toPrisma(answer)
+
+    await this.prisma.answer.create({
+      data,
+    })
   }
 
-  findManyByAnswerId(
+  async findManyByAnswerId(
     questionId: string,
-    params: PaginationParams,
+    { page }: PaginationParams
   ): Promise<Answer[]> {
-    throw new Error('Method not implemented.')
+    const answers = await this.prisma.answer.findMany({
+      where: {
+        questionId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: ITEMS_PER_PAGE,
+      skip: (page - 1) * ITEMS_PER_PAGE,
+    })
+
+    return answers.map((question) => {
+      return PrismaAnswerMapper.toDomain(question)
+    })
   }
 }

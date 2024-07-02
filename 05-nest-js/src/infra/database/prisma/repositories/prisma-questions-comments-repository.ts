@@ -2,27 +2,64 @@ import { PaginationParams } from '@/core/repositories/pagination-params'
 import { QuestionCommentsRepository } from '@/domain/forum/application/repositories/questions-comment'
 import { QuestionComment } from '@/domain/forum/enterprise/entities/comment/question-comment'
 import { Injectable } from '@nestjs/common'
+import { PrismaQuestionCommentMapper } from '../mappers/prisma-question-comment-mapper'
+import { PrismaService } from '../prisma.service'
+
+const ITEMS_PER_PAGE = 20
 
 @Injectable()
 export class PrismaQuestionsCommentsRepository
   implements QuestionCommentsRepository
 {
-  create(questionComment: QuestionComment): Promise<void> {
-    throw new Error('Method not implemented.')
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(questionComment: QuestionComment): Promise<void> {
+    const data = PrismaQuestionCommentMapper.toPrisma(questionComment)
+
+    await this.prisma.comment.create({
+      data,
+    })
   }
 
-  findById(id: string): Promise<QuestionComment | null> {
-    throw new Error('Method not implemented.')
+  async findById(id: string): Promise<QuestionComment | null> {
+    const questionComment = await this.prisma.comment.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    if (!questionComment) {
+      return null
+    }
+
+    return PrismaQuestionCommentMapper.toDomain(questionComment)
   }
 
-  delete(questionComment: QuestionComment): Promise<void> {
-    throw new Error('Method not implemented.')
+  async delete(questionComment: QuestionComment): Promise<void> {
+    await this.prisma.question.delete({
+      where: {
+        id: questionComment.id.toString(),
+      },
+    })
   }
 
-  findManyByQuestionId(
+  async findManyByQuestionId(
     questionId: string,
-    params: PaginationParams,
+    { page }: PaginationParams
   ): Promise<QuestionComment[]> {
-    throw new Error('Method not implemented.')
+    const questionComments = await this.prisma.comment.findMany({
+      where: {
+        questionId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: ITEMS_PER_PAGE,
+      skip: (page - 1) * ITEMS_PER_PAGE,
+    })
+
+    return questionComments.map((question) => {
+      return PrismaQuestionCommentMapper.toDomain(question)
+    })
   }
 }
