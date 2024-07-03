@@ -7,6 +7,7 @@ import { AnswerAttachmentRepository } from '../../repositories/answer-attachment
 import { AnswersRepository } from '../../repositories/answers'
 import { NotAllowedError } from '../_errors/not-allowed-error'
 import { ResourceNotFoundError } from '../_errors/resource-not-found'
+import { Injectable } from '@nestjs/common'
 
 export type TEditAnswerUseCaseRequest = {
   authorId: string
@@ -22,10 +23,11 @@ export type TEditAnswerUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class EditAnswerUseCase {
   constructor(
     private answersRepository: AnswersRepository,
-    private answerAttachmentsRepository: AnswerAttachmentRepository,
+    private answerAttachmentsRepository: AnswerAttachmentRepository
   ) {}
 
   async execute({
@@ -48,7 +50,7 @@ export class EditAnswerUseCase {
       await this.answerAttachmentsRepository.findManyByAnswerId(answerId)
 
     const refAnswerAttachmentList = new AnswerAttachmentList(
-      currentAnswerAttachments,
+      currentAnswerAttachments
     )
 
     const newAnswerAttachments = attachmentsId.map((attachmentId) => {
