@@ -1,4 +1,5 @@
 import { Either, left, right } from '@/core/error/either'
+import { Injectable } from '@nestjs/common'
 import { QuestionsRepository } from '../../repositories/questions'
 import { NotAllowedError } from '../_errors/not-allowed-error'
 import { ResourceNotFoundError } from '../_errors/resource-not-found'
@@ -13,6 +14,7 @@ export type TDeleteQuestionUseCaseResponse = Either<
   null
 >
 
+@Injectable()
 export class DeleteQuestionUseCase {
   constructor(private questionsRepository: QuestionsRepository) {}
 
