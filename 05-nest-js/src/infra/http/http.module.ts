@@ -1,6 +1,7 @@
 import { AnswerQuestionUseCase } from '@/domain/forum/application/use-cases/answer-question'
 import { AuthenticateStudentUseCase } from '@/domain/forum/application/use-cases/authenticate-student'
 import { ChooseAnswerBestAnswerUseCase } from '@/domain/forum/application/use-cases/choose-question-best-answer'
+import { CommentOnAnswerUseCase } from '@/domain/forum/application/use-cases/comment-on-answer'
 import { CommentOnQuestionUseCase } from '@/domain/forum/application/use-cases/comment-on-question'
 import { CreateQuestionUseCase } from '@/domain/forum/application/use-cases/create-question'
 import { DeleteAnswerUseCase } from '@/domain/forum/application/use-cases/delete-answer'
@@ -18,6 +19,7 @@ import { DataBaseModule } from '../database/database.module'
 import { AnswerQuestionController } from './controllers/answer-question/index.controller'
 import { AuthenticationController } from './controllers/authentication/index.controller'
 import { ChooseQuestionBestAnswerController } from './controllers/choose-question-best-answer/index.controller'
+import { CommentOnAnswerController } from './controllers/comment-on-answer/index.controller'
 import { CommentOnQuestionController } from './controllers/comment-on-question/index.controller'
 import { CreateAccountController } from './controllers/create-account/index.controller'
 import { CreateQuestionController } from './controllers/create-question/index.controller'
@@ -46,6 +48,7 @@ import { GetQuestionBySlugController } from './controllers/get-question-by-slug/
     ChooseQuestionBestAnswerController,
     CommentOnQuestionController,
     DeleteQuestionCommentController,
+    CommentOnAnswerController,
   ],
   imports: [DataBaseModule, CryptographyModule],
   providers: [
@@ -63,6 +66,7 @@ import { GetQuestionBySlugController } from './controllers/get-question-by-slug/
     ChooseAnswerBestAnswerUseCase,
     CommentOnQuestionUseCase,
     DeleteCommentOnQuestionUseCase,
+    CommentOnAnswerUseCase,
   ],
 })
 export class HttpModule {}
