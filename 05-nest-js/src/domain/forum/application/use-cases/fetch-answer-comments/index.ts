@@ -1,5 +1,6 @@
 import { Either, right } from '@/core/error/either'
 import { AnswerComment } from '@/domain/forum/enterprise/entities/comment/answer-comment'
+import { Injectable } from '@nestjs/common'
 import { AnswersCommentRepository } from '../../repositories/answers-comment'
 
 export type TFetchAnswerCommentsUseCaseRequest = {
@@ -14,6 +15,7 @@ export type TFetchAnswerCommentsUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class FetchAnswerCommentsUseCase {
   constructor(private answersCommentRepository: AnswersCommentRepository) {}
 
