@@ -35,7 +35,7 @@ describe('Get question by slug [e2e]', () => {
 
     await questionFactory.makePrismaQuestion({
       authorId: user.id,
-      title: 'question 1',
+      title: 'question-1',
       slug: Slug.create('question-1'),
     })
 
@@ -47,7 +47,7 @@ describe('Get question by slug [e2e]', () => {
     expect(response.statusCode).toStrictEqual(200)
 
     expect(response.body).toEqual({
-      questions: expect.objectContaining({ title: 'question 1' }),
+      question: expect.objectContaining({ title: 'question-1' }),
     })
   })
 })
