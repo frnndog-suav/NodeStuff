@@ -3,7 +3,7 @@ import { UniqueEntityID } from '../value-objects/unique-entity-id'
 
 export type TAttachmentProps = {
   title: string
-  link: string
+  url: string
 }
 
 export class Attachment extends Entity<TAttachmentProps> {
@@ -11,8 +11,8 @@ export class Attachment extends Entity<TAttachmentProps> {
     return this.props.title
   }
 
-  get link() {
-    return this.props.link
+  get url() {
+    return this.props.url
   }
 
   static create(props: TAttachmentProps, id?: UniqueEntityID) {
