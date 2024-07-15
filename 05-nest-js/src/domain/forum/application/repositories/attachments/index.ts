@@ -1,4 +1,4 @@
-import { Attachment } from '@/domain/forum/enterprise/entities/attachment'
+import { Attachment } from '@prisma/client'
 
 export abstract class AttachmentsRepository {
   abstract create(attachment: Attachment): Promise<void>

@@ -1,6 +1,5 @@
 import { AppModule } from '@/infra/app.module'
 import { DataBaseModule } from '@/infra/database/database.module'
-import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
@@ -9,7 +8,6 @@ import { StudentFactory } from 'test/factories/make-student'
 
 describe('Upload attachment [e2e]', () => {
   let app: INestApplication
-  let prisma: PrismaService
   let studentFactory: StudentFactory
   let jwt: JwtService
 
@@ -21,7 +19,7 @@ describe('Upload attachment [e2e]', () => {
 
     app = moduleRef.createNestApplication()
     studentFactory = moduleRef.get(StudentFactory)
-    prisma = moduleRef.get(PrismaService)
+
     jwt = moduleRef.get(JwtService)
 
     await app.init()
@@ -38,5 +36,8 @@ describe('Upload attachment [e2e]', () => {
       .attach('file', './test/e2e/sample-upload.jpg')
 
     expect(response.statusCode).toStrictEqual(201)
+    expect(response.body).toEqual({
+      attachmentId: expect.any(String),
+    })
   })
 })
