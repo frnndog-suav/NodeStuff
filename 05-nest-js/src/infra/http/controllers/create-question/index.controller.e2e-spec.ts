@@ -6,21 +6,24 @@ import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
 import { StudentFactory } from 'test/factories/make-student'
+import { AttachmentFactory } from './../../../../../test/factories/make-attachment/index'
 
 describe('Create question [e2e]', () => {
   let app: INestApplication
   let prisma: PrismaService
   let studentFactory: StudentFactory
+  let attachmentFactory: AttachmentFactory
   let jwt: JwtService
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DataBaseModule],
-      providers: [StudentFactory],
+      providers: [StudentFactory, AttachmentFactory],
     }).compile()
 
     app = moduleRef.createNestApplication()
     studentFactory = moduleRef.get(StudentFactory)
+    attachmentFactory = moduleRef.get(AttachmentFactory)
     prisma = moduleRef.get(PrismaService)
     jwt = moduleRef.get(JwtService)
 
@@ -32,12 +35,16 @@ describe('Create question [e2e]', () => {
 
     const accessToken = jwt.sign({ sub: user.id.toString() })
 
+    const attachment1 = await attachmentFactory.makePrismaAttachment()
+    const attachment2 = await attachmentFactory.makePrismaAttachment()
+
     const response = await request(app.getHttpServer())
       .post('/questions')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         title: 'new question',
         content: 'new question content',
+        attachments: [attachment1.id.toString(), attachment2.id.toString()],
       })
 
     expect(response.statusCode).toStrictEqual(201)
@@ -49,5 +56,13 @@ describe('Create question [e2e]', () => {
     })
 
     expect(questionOnDatabase).not.toBeNull()
+
+    const attachmentsOnDatabase = await prisma.attachment.findMany({
+      where: {
+        questionId: questionOnDatabase?.id,
+      },
+    })
+
+    expect(attachmentsOnDatabase).toHaveLength(2)
   })
 })

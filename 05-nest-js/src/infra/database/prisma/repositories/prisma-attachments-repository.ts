@@ -1,7 +1,8 @@
 import { AttachmentsRepository } from '@/domain/forum/application/repositories/attachments'
 
 import { Injectable } from '@nestjs/common'
-import { Attachment } from '@prisma/client'
+
+import { Attachment } from '@/domain/forum/enterprise/entities/attachment'
 import { PrismaAttachmentMapper } from '../mappers/prisma-attachment-mapper'
 import { PrismaService } from '../prisma.service'
 
