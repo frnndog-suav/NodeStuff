@@ -15,11 +15,11 @@ describe('[Use Case] - Edit question', () => {
     inMemoryQuestionsAttachmentRepository =
       new InMemoryQuestionsAttachmentRepository()
     inMemoryQuestionRepository = new InMemoryQuestionsRepository(
-      inMemoryQuestionsAttachmentRepository,
+      inMemoryQuestionsAttachmentRepository
     )
     useCase = new EditQuestionUseCase(
       inMemoryQuestionRepository,
-      inMemoryQuestionsAttachmentRepository,
+      inMemoryQuestionsAttachmentRepository
     )
   })
 
@@ -28,7 +28,7 @@ describe('[Use Case] - Edit question', () => {
       {
         authorId: new UniqueEntityID('author-1'),
       },
-      new UniqueEntityID('question-1'),
+      new UniqueEntityID('question-1')
     )
 
     inMemoryQuestionRepository.create(newQuestion)
@@ -41,7 +41,7 @@ describe('[Use Case] - Edit question', () => {
       makeQuestionAttachment({
         questionId: newQuestion.id,
         attachmentId: new UniqueEntityID('2'),
-      }),
+      })
     )
 
     await useCase.execute({
@@ -57,10 +57,10 @@ describe('[Use Case] - Edit question', () => {
       content: 'Test content',
     })
     expect(
-      inMemoryQuestionRepository.items[0].attachments.currentItems,
+      inMemoryQuestionRepository.items[0].attachments.currentItems
     ).toHaveLength(2)
     expect(
-      inMemoryQuestionRepository.items[0].attachments.currentItems,
+      inMemoryQuestionRepository.items[0].attachments.currentItems
     ).toEqual([
       expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
       expect.objectContaining({ attachmentId: new UniqueEntityID('3') }),
@@ -72,7 +72,7 @@ describe('[Use Case] - Edit question', () => {
       {
         authorId: new UniqueEntityID('author-2'),
       },
-      new UniqueEntityID('question-1'),
+      new UniqueEntityID('question-1')
     )
 
     inMemoryQuestionRepository.create(newQuestion)
@@ -87,5 +87,48 @@ describe('[Use Case] - Edit question', () => {
 
     expect(result.isLeft()).toBe(true)
     expect(result.value).toBeInstanceOf(NotAllowedError)
+  })
+
+  it('it should sync new and removed attachments when editing a question', async () => {
+    const newQuestion = makeQuestion(
+      {
+        authorId: new UniqueEntityID('author-1'),
+      },
+      new UniqueEntityID('question-1')
+    )
+
+    inMemoryQuestionRepository.create(newQuestion)
+
+    inMemoryQuestionsAttachmentRepository.items.push(
+      makeQuestionAttachment({
+        questionId: newQuestion.id,
+        attachmentId: new UniqueEntityID('1'),
+      }),
+      makeQuestionAttachment({
+        questionId: newQuestion.id,
+        attachmentId: new UniqueEntityID('2'),
+      })
+    )
+
+    const result = await useCase.execute({
+      authorId: 'author-1',
+      title: 'Test question',
+      content: 'Test content',
+      questionId: newQuestion.id.toValue(),
+      attachmentsId: ['1', '3'],
+    })
+
+    expect(result.isRight()).toBe(true)
+    expect(inMemoryQuestionsAttachmentRepository.items).toHaveLength(2)
+    expect(inMemoryQuestionsAttachmentRepository.items).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          attachmentId: new UniqueEntityID('1'),
+        }),
+        expect.objectContaining({
+          attachmentId: new UniqueEntityID('3'),
+        }),
+      ])
+    )
   })
 })
