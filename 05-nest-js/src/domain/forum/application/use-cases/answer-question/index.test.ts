@@ -12,7 +12,7 @@ describe('[Use Case] - Answer question', () => {
     inMemoryAnswerAttachmentsRepository =
       new InMemoryAnswersAttachmentRepository()
     inMemoryAnswersRepository = new InMemoryAnswersRepository(
-      inMemoryAnswerAttachmentsRepository,
+      inMemoryAnswerAttachmentsRepository
     )
     useCase = new AnswerQuestionUseCase(inMemoryAnswersRepository)
   })
@@ -28,16 +28,38 @@ describe('[Use Case] - Answer question', () => {
     expect(result.isRight()).toBe(true)
 
     expect(inMemoryAnswersRepository.items[0].id).toEqual(
-      result.value?.answer.id,
+      result.value?.answer.id
     )
     expect(
-      inMemoryAnswersRepository.items[0].attachments.currentItems,
+      inMemoryAnswersRepository.items[0].attachments.currentItems
     ).toHaveLength(2)
     expect(inMemoryAnswersRepository.items[0].attachments.currentItems).toEqual(
       [
         expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
         expect.objectContaining({ attachmentId: new UniqueEntityID('2') }),
-      ],
+      ]
+    )
+  })
+
+  it('should persist attachments when creating a new answer', async () => {
+    const result = await useCase.execute({
+      questionId: '1',
+      authorId: '1',
+      content: 'content',
+      attachmentsId: ['1', '2'],
+    })
+
+    expect(result.isRight()).toBe(true)
+    expect(inMemoryAnswerAttachmentsRepository.items).toHaveLength(2)
+    expect(inMemoryAnswerAttachmentsRepository.items).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          attachmentId: new UniqueEntityID('1'),
+        }),
+        expect.objectContaining({
+          attachmentId: new UniqueEntityID('2'),
+        }),
+      ])
     )
   })
 })

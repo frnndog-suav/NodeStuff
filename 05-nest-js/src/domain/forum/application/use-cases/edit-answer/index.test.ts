@@ -15,11 +15,11 @@ describe('[Use Case] - Edit answer', () => {
     inMemoryAnswerAttachmentsRepository =
       new InMemoryAnswersAttachmentRepository()
     inMemoryAnswersRepository = new InMemoryAnswersRepository(
-      inMemoryAnswerAttachmentsRepository,
+      inMemoryAnswerAttachmentsRepository
     )
     useCase = new EditAnswerUseCase(
       inMemoryAnswersRepository,
-      inMemoryAnswerAttachmentsRepository,
+      inMemoryAnswerAttachmentsRepository
     )
   })
 
@@ -28,7 +28,7 @@ describe('[Use Case] - Edit answer', () => {
       {
         authorId: new UniqueEntityID('author-1'),
       },
-      new UniqueEntityID('answer-1'),
+      new UniqueEntityID('answer-1')
     )
 
     inMemoryAnswersRepository.create(newAnswer)
@@ -41,7 +41,7 @@ describe('[Use Case] - Edit answer', () => {
       makeAnswerAttachment({
         answerId: newAnswer.id,
         attachmentId: new UniqueEntityID('2'),
-      }),
+      })
     )
 
     await useCase.execute({
@@ -55,13 +55,13 @@ describe('[Use Case] - Edit answer', () => {
       content: 'Test content',
     })
     expect(
-      inMemoryAnswersRepository.items[0].attachments.currentItems,
+      inMemoryAnswersRepository.items[0].attachments.currentItems
     ).toHaveLength(2)
     expect(inMemoryAnswersRepository.items[0].attachments.currentItems).toEqual(
       [
         expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
         expect.objectContaining({ attachmentId: new UniqueEntityID('3') }),
-      ],
+      ]
     )
   })
 
@@ -70,7 +70,7 @@ describe('[Use Case] - Edit answer', () => {
       {
         authorId: new UniqueEntityID('author-2'),
       },
-      new UniqueEntityID('answer-1'),
+      new UniqueEntityID('answer-1')
     )
 
     inMemoryAnswersRepository.create(newAnswer)
@@ -84,5 +84,47 @@ describe('[Use Case] - Edit answer', () => {
 
     expect(result.isLeft()).toBe(true)
     expect(result.value).toBeInstanceOf(NotAllowedError)
+  })
+
+  it('it should sync new and removed attachments when editing an answer', async () => {
+    const newAnswer = makeAnswer(
+      {
+        authorId: new UniqueEntityID('author-1'),
+      },
+      new UniqueEntityID('question-1')
+    )
+
+    inMemoryAnswersRepository.create(newAnswer)
+
+    inMemoryAnswerAttachmentsRepository.items.push(
+      makeAnswerAttachment({
+        answerId: newAnswer.id,
+        attachmentId: new UniqueEntityID('1'),
+      }),
+      makeAnswerAttachment({
+        answerId: newAnswer.id,
+        attachmentId: new UniqueEntityID('2'),
+      })
+    )
+
+    const result = await useCase.execute({
+      answerId: newAnswer.id.toValue(),
+      authorId: 'author-1',
+      content: 'Test content',
+      attachmentsId: ['1', '3'],
+    })
+
+    expect(result.isRight()).toBe(true)
+    expect(inMemoryAnswerAttachmentsRepository.items).toHaveLength(2)
+    expect(inMemoryAnswerAttachmentsRepository.items).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          attachmentId: new UniqueEntityID('1'),
+        }),
+        expect.objectContaining({
+          attachmentId: new UniqueEntityID('3'),
+        }),
+      ])
+    )
   })
 })
