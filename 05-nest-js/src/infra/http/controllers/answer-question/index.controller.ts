@@ -27,7 +27,7 @@ export class AnswerQuestionController {
     @Body(new ZodValidationPipe(answerQuestionBodySchema))
     body: AnswerQuestionBodySchema,
     @CurrentUser() user: UserPayload,
-    @Param('questionId') questionId: string
+    @Param('questionId') questionId: string,
   ) {
     const { content, attachments } = body
     const { sub: userId } = user

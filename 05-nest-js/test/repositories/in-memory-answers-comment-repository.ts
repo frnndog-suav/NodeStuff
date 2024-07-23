@@ -29,14 +29,14 @@ export class InMemoryAnswersCommentRepository
 
   async delete(answerComment: AnswerComment): Promise<void> {
     const itemIndex = this.items.findIndex(
-      (item) => item.id === answerComment.id
+      (item) => item.id === answerComment.id,
     )
     this.items.splice(itemIndex, 1)
   }
 
   async findManyByAnswerId(
     answerId: string,
-    { page }: PaginationParams
+    { page }: PaginationParams,
   ): Promise<AnswerComment[]> {
     const answerComments = this.items
       .filter((item) => item.answerId.toString() === answerId)
@@ -47,14 +47,14 @@ export class InMemoryAnswersCommentRepository
 
   async findManyByAnswerIdWithAuthor(
     answerId: string,
-    { page }: PaginationParams
+    { page }: PaginationParams,
   ): Promise<CommentWithAuthor[]> {
     const answerComments = this.items
       .filter((item) => item.answerId.toString() === answerId)
       .slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE)
       .map((comment) => {
         const student = this.inMemoryStudentsRepository.items.find((student) =>
-          student.id.equals(comment.authorId)
+          student.id.equals(comment.authorId),
         )
 
         if (!student) {

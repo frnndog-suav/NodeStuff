@@ -17,7 +17,7 @@ describe('[Use Case] - Authenticate student', () => {
     useCase = new AuthenticateStudentUseCase(
       inMemoryStudentsRepository,
       fakeHasher,
-      fakeEncrypter
+      fakeEncrypter,
     )
   })
 

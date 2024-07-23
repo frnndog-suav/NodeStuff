@@ -29,16 +29,16 @@ describe('[Use Case] - Choose question best answer', () => {
     inMemoryQuestionAttachmentsRepository =
       new InMemoryQuestionsAttachmentRepository()
     inMemoryAnswersRepository = new InMemoryAnswersRepository(
-      inMemoryAnswerAttachmentsRepository
+      inMemoryAnswerAttachmentsRepository,
     )
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
       inMemoryQuestionAttachmentsRepository,
       inMemoryAttachmentsRepository,
-      inMemoryStudentsRepository
+      inMemoryStudentsRepository,
     )
     useCase = new ChooseAnswerBestAnswerUseCase(
       inMemoryAnswersRepository,
-      inMemoryQuestionsRepository
+      inMemoryQuestionsRepository,
     )
   })
 
@@ -57,7 +57,7 @@ describe('[Use Case] - Choose question best answer', () => {
     })
 
     expect(inMemoryQuestionsRepository.items[0].bestAnswerID).toStrictEqual(
-      answer.id
+      answer.id,
     )
   })
 

@@ -18,7 +18,7 @@ export class PrismaAnswersAttachmentsRepository
     })
 
     return answerAttachments.map((attachment) =>
-      PrismaAnswerAttachmentMapper.toDomain(attachment)
+      PrismaAnswerAttachmentMapper.toDomain(attachment),
     )
   }
 
@@ -42,7 +42,7 @@ export class PrismaAnswersAttachmentsRepository
     if (attachments.length === 0) return
 
     const attachmentsId = attachments.map((attachment) =>
-      attachment.id.toString()
+      attachment.id.toString(),
     )
 
     await this.prisma.attachment.deleteMany({

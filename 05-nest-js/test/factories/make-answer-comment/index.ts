@@ -11,7 +11,7 @@ import { Injectable } from '@nestjs/common'
 
 export function makeAnswerComment(
   override: Partial<TAnswerCommentProps> = {},
-  id?: UniqueEntityID
+  id?: UniqueEntityID,
 ) {
   return AnswerComment.create(
     {
@@ -20,7 +20,7 @@ export function makeAnswerComment(
       content: faker.lorem.text(),
       ...override,
     },
-    id
+    id,
   )
 }
 
@@ -29,7 +29,7 @@ export class AnswerCommentFactory {
   constructor(private prisma: PrismaService) {}
 
   async makePrismaAnswerComment(
-    data: Partial<TAnswerCommentProps> = {}
+    data: Partial<TAnswerCommentProps> = {},
   ): Promise<AnswerComment> {
     const answerComment = makeAnswerComment(data)
 

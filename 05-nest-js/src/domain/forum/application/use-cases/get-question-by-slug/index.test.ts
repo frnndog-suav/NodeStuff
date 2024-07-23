@@ -24,7 +24,7 @@ describe('[Use Case] - Get question by slug', () => {
     inMemoryRepository = new InMemoryQuestionsRepository(
       inMemoryQuestionAttachmentsRepository,
       inMemoryAttachmentsRepository,
-      inMemoryStudentsRepository
+      inMemoryStudentsRepository,
     )
     useCase = new GetQuestionBySlugUseCase(inMemoryRepository)
   })
@@ -53,7 +53,7 @@ describe('[Use Case] - Get question by slug', () => {
       makeQuestionAttachment({
         attachmentId: attachment.id,
         questionId: newQuestion.id,
-      })
+      }),
     )
 
     const result = await useCase.execute({

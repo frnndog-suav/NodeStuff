@@ -15,14 +15,14 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
   constructor(
     private questionAttachmentRepository: InMemoryQuestionsAttachmentRepository,
     private attachmentsRepository: InMemoryAttachmentsRepository,
-    private studentsRepository: InMemoryStudentsRepository
+    private studentsRepository: InMemoryStudentsRepository,
   ) {}
 
   async create(question: Question) {
     this.items.push(question)
 
     await this.questionAttachmentRepository.createMany(
-      question.attachments.getItems()
+      question.attachments.getItems(),
     )
 
     DomainEvents.dispatchEventsForAggregate(question.id)
@@ -53,7 +53,7 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
     this.items.splice(itemIndex, 1)
 
     this.questionAttachmentRepository.deleteManyByQuestionId(
-      question.id.toString()
+      question.id.toString(),
     )
   }
 
@@ -62,11 +62,11 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
     this.items[itemIndex] = question
 
     await this.questionAttachmentRepository.createMany(
-      question.attachments.getNewItems()
+      question.attachments.getNewItems(),
     )
 
     await this.questionAttachmentRepository.deleteMany(
-      question.attachments.getRemovedItems()
+      question.attachments.getRemovedItems(),
     )
 
     DomainEvents.dispatchEventsForAggregate(question.id)
@@ -88,17 +88,17 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
     }
 
     const author = this.studentsRepository.items.find(
-      (student) => student.id === question.authorId
+      (student) => student.id === question.authorId,
     )
 
     if (!author) {
       throw new Error(
-        `Author with ID "${question.authorId.toString()}" does not exist.`
+        `Author with ID "${question.authorId.toString()}" does not exist.`,
       )
     }
 
     const questionAttachments = this.questionAttachmentRepository.items.filter(
-      (attachment) => attachment.questionId === question.id
+      (attachment) => attachment.questionId === question.id,
     )
 
     const attachments = questionAttachments.map((questionAttachment) => {
@@ -108,7 +108,7 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
 
       if (!attachment) {
         throw new Error(
-          `Attachment with ID "${questionAttachment.attachmentId}" does not exist.`
+          `Attachment with ID "${questionAttachment.attachmentId}" does not exist.`,
         )
       }
 

@@ -8,7 +8,7 @@ import { Injectable } from '@nestjs/common'
 
 export function makeAnswer(
   override: Partial<TAnswerProps> = {},
-  id?: UniqueEntityID
+  id?: UniqueEntityID,
 ) {
   return Answer.create(
     {
@@ -17,7 +17,7 @@ export function makeAnswer(
       questionId: new UniqueEntityID(),
       ...override,
     },
-    id
+    id,
   )
 }
 

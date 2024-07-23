@@ -24,11 +24,11 @@ describe('[Use Case] - Edit question', () => {
     inMemoryQuestionRepository = new InMemoryQuestionsRepository(
       inMemoryQuestionsAttachmentRepository,
       inMemoryAttachmentsRepository,
-      inMemoryStudentsRepository
+      inMemoryStudentsRepository,
     )
     useCase = new EditQuestionUseCase(
       inMemoryQuestionRepository,
-      inMemoryQuestionsAttachmentRepository
+      inMemoryQuestionsAttachmentRepository,
     )
   })
 
@@ -37,7 +37,7 @@ describe('[Use Case] - Edit question', () => {
       {
         authorId: new UniqueEntityID('author-1'),
       },
-      new UniqueEntityID('question-1')
+      new UniqueEntityID('question-1'),
     )
 
     inMemoryQuestionRepository.create(newQuestion)
@@ -50,7 +50,7 @@ describe('[Use Case] - Edit question', () => {
       makeQuestionAttachment({
         questionId: newQuestion.id,
         attachmentId: new UniqueEntityID('2'),
-      })
+      }),
     )
 
     await useCase.execute({
@@ -66,10 +66,10 @@ describe('[Use Case] - Edit question', () => {
       content: 'Test content',
     })
     expect(
-      inMemoryQuestionRepository.items[0].attachments.currentItems
+      inMemoryQuestionRepository.items[0].attachments.currentItems,
     ).toHaveLength(2)
     expect(
-      inMemoryQuestionRepository.items[0].attachments.currentItems
+      inMemoryQuestionRepository.items[0].attachments.currentItems,
     ).toEqual([
       expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
       expect.objectContaining({ attachmentId: new UniqueEntityID('3') }),
@@ -81,7 +81,7 @@ describe('[Use Case] - Edit question', () => {
       {
         authorId: new UniqueEntityID('author-2'),
       },
-      new UniqueEntityID('question-1')
+      new UniqueEntityID('question-1'),
     )
 
     inMemoryQuestionRepository.create(newQuestion)
@@ -103,7 +103,7 @@ describe('[Use Case] - Edit question', () => {
       {
         authorId: new UniqueEntityID('author-1'),
       },
-      new UniqueEntityID('question-1')
+      new UniqueEntityID('question-1'),
     )
 
     inMemoryQuestionRepository.create(newQuestion)
@@ -116,7 +116,7 @@ describe('[Use Case] - Edit question', () => {
       makeQuestionAttachment({
         questionId: newQuestion.id,
         attachmentId: new UniqueEntityID('2'),
-      })
+      }),
     )
 
     const result = await useCase.execute({
@@ -137,7 +137,7 @@ describe('[Use Case] - Edit question', () => {
         expect.objectContaining({
           attachmentId: new UniqueEntityID('3'),
         }),
-      ])
+      ]),
     )
   })
 })

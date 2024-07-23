@@ -12,14 +12,14 @@ import {
 @Controller('/answers/comments/:id')
 export class DeleteAnswerCommentController {
   constructor(
-    private deleteAnswerCommentUseCase: DeleteCommentOnAnswerUseCase
+    private deleteAnswerCommentUseCase: DeleteCommentOnAnswerUseCase,
   ) {}
 
   @Delete()
   @HttpCode(204)
   async handle(
     @CurrentUser() user: UserPayload,
-    @Param('id') answerCommentId: string
+    @Param('id') answerCommentId: string,
   ) {
     const { sub: userId } = user
 

@@ -29,7 +29,7 @@ export class EditAnswerController {
     @Body(new ZodValidationPipe(editAnswerBodySchema))
     body: EditAnswerBodySchema,
     @CurrentUser() user: UserPayload,
-    @Param('id') answerId: string
+    @Param('id') answerId: string,
   ) {
     const { content, attachments } = body
     const { sub: userId } = user

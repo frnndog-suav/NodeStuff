@@ -8,7 +8,7 @@ export class InMemoryAnswersAttachmentRepository
 
   async findManyByAnswerId(answerId: string): Promise<AnswerAttachment[]> {
     const answerAttachments = this.items.filter(
-      (item) => item.answerId.toString() === answerId
+      (item) => item.answerId.toString() === answerId,
     )
 
     return answerAttachments
@@ -16,7 +16,7 @@ export class InMemoryAnswersAttachmentRepository
 
   async deleteManyByAnswerId(answerId: string): Promise<void> {
     const answerAttachments = this.items.filter(
-      (item) => item.answerId.toString() !== answerId
+      (item) => item.answerId.toString() !== answerId,
     )
 
     this.items = answerAttachments

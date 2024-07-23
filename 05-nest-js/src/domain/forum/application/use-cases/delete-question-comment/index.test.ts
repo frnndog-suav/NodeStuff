@@ -14,10 +14,10 @@ describe('[Use Case] - Delete on question', () => {
     inMemoryStudentsRepository = new InMemoryStudentsRepository()
 
     inMemoryQuestionsCommentRepository = new InMemoryQuestionsCommentRepository(
-      inMemoryStudentsRepository
+      inMemoryStudentsRepository,
     )
     useCase = new DeleteCommentOnQuestionUseCase(
-      inMemoryQuestionsCommentRepository
+      inMemoryQuestionsCommentRepository,
     )
   })
 

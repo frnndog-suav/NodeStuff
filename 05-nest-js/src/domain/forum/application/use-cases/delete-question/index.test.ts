@@ -24,7 +24,7 @@ describe('[Use Case] - Delete question', () => {
     inMemoryQuestionRepository = new InMemoryQuestionsRepository(
       inMemoryQuestionAttachmentRepository,
       inMemoryAttachmentsRepository,
-      inMemoryStudentsRepository
+      inMemoryStudentsRepository,
     )
     useCase = new DeleteQuestionUseCase(inMemoryQuestionRepository)
   })
@@ -34,7 +34,7 @@ describe('[Use Case] - Delete question', () => {
       {
         authorId: new UniqueEntityID('author-1'),
       },
-      new UniqueEntityID('question-1')
+      new UniqueEntityID('question-1'),
     )
 
     inMemoryQuestionRepository.create(newQuestion)
@@ -47,7 +47,7 @@ describe('[Use Case] - Delete question', () => {
       makeQuestionAttachment({
         questionId: newQuestion.id,
         attachmentId: new UniqueEntityID('2'),
-      })
+      }),
     )
 
     await useCase.execute({
@@ -64,7 +64,7 @@ describe('[Use Case] - Delete question', () => {
       {
         authorId: new UniqueEntityID('author-2'),
       },
-      new UniqueEntityID('question-1')
+      new UniqueEntityID('question-1'),
     )
 
     inMemoryQuestionRepository.create(newQuestion)

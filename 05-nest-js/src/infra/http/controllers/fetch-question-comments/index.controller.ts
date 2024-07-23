@@ -24,13 +24,13 @@ const queryValidationPipe = new ZodValidationPipe(pageQueryParamSchema)
 @Controller('/questions/:questionId/comments')
 export class FetchQuestionCommentsController {
   constructor(
-    private fetchQuestionCommentsUseCase: FetchQuestionCommentsUseCase
+    private fetchQuestionCommentsUseCase: FetchQuestionCommentsUseCase,
   ) {}
 
   @Get()
   async handle(
     @Query('page', queryValidationPipe) page: PageQueryParamSchema,
-    @Param('questionId') questionId: string
+    @Param('questionId') questionId: string,
   ) {
     const result = await this.fetchQuestionCommentsUseCase.execute({
       page,
@@ -45,7 +45,7 @@ export class FetchQuestionCommentsController {
 
     return {
       comments: comments.map((comment) =>
-        CommentWithAuthorPresenter.toHttp(comment)
+        CommentWithAuthorPresenter.toHttp(comment),
       ),
     }
   }

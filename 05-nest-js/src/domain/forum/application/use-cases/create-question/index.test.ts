@@ -21,7 +21,7 @@ describe('[Use Case] - Create question', () => {
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
       inMemoryQuestionsAttachmentRepository,
       inMemoryAttachmentsRepository,
-      inMemoryStudentsRepository
+      inMemoryStudentsRepository,
     )
     useCase = new CreateQuestionUseCase(inMemoryQuestionsRepository)
   })
@@ -36,13 +36,13 @@ describe('[Use Case] - Create question', () => {
 
     expect(result.isRight()).toBe(true)
     expect(inMemoryQuestionsRepository.items[0].id).toStrictEqual(
-      result.value?.question.id
+      result.value?.question.id,
     )
     expect(
-      inMemoryQuestionsRepository.items[0].attachments.currentItems
+      inMemoryQuestionsRepository.items[0].attachments.currentItems,
     ).toHaveLength(2)
     expect(
-      inMemoryQuestionsRepository.items[0].attachments.currentItems
+      inMemoryQuestionsRepository.items[0].attachments.currentItems,
     ).toEqual([
       expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
       expect.objectContaining({ attachmentId: new UniqueEntityID('2') }),
@@ -67,7 +67,7 @@ describe('[Use Case] - Create question', () => {
         expect.objectContaining({
           attachmentId: new UniqueEntityID('2'),
         }),
-      ])
+      ]),
     )
   })
 })

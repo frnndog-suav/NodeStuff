@@ -22,20 +22,20 @@ describe('[Use Case] - Fetch recent questions', () => {
     inMemoryRepository = new InMemoryQuestionsRepository(
       inMemoryQuestionAttachmentsRepository,
       inMemoryAttachmentsRepository,
-      inMemoryStudentsRepository
+      inMemoryStudentsRepository,
     )
     useCase = new FetchRecentQuestionsUseCase(inMemoryRepository)
   })
 
   it('it should be able to fetch recent questions', async () => {
     await inMemoryRepository.create(
-      makeQuestion({ createdAt: new Date(2022, 0, 20) })
+      makeQuestion({ createdAt: new Date(2022, 0, 20) }),
     )
     await inMemoryRepository.create(
-      makeQuestion({ createdAt: new Date(2022, 0, 18) })
+      makeQuestion({ createdAt: new Date(2022, 0, 18) }),
     )
     await inMemoryRepository.create(
-      makeQuestion({ createdAt: new Date(2022, 0, 23) })
+      makeQuestion({ createdAt: new Date(2022, 0, 23) }),
     )
 
     const result = await useCase.execute({

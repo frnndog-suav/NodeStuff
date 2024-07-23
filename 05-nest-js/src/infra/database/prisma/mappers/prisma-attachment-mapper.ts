@@ -1,9 +1,20 @@
-import { Attachment as PrismaAttachment } from '@/domain/forum/enterprise/entities/attachment'
-import { Prisma } from '@prisma/client'
+import { Attachment } from '@/domain/forum/enterprise/entities/attachment'
+import { UniqueEntityID } from '@/domain/forum/enterprise/entities/value-objects/unique-entity-id'
+import { Prisma, Attachment as PrismaAttachment } from '@prisma/client'
 
 export class PrismaAttachmentMapper {
+  static toDomain(raw: PrismaAttachment): Attachment {
+    return Attachment.create(
+      {
+        title: raw.title,
+        url: raw.url,
+      },
+      new UniqueEntityID(raw.id),
+    )
+  }
+
   static toPrisma(
-    attachment: PrismaAttachment
+    attachment: Attachment,
   ): Prisma.AttachmentUncheckedCreateInput {
     return {
       id: attachment.id.toString(),

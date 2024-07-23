@@ -12,7 +12,7 @@ const ITEMS_PER_PAGE = 20
 export class PrismaAnswersRepository implements AnswersRepository {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly answerAttachmentRepository: AnswerAttachmentRepository
+    private readonly answerAttachmentRepository: AnswerAttachmentRepository,
   ) {}
 
   async create(answer: Answer): Promise<void> {
@@ -23,7 +23,7 @@ export class PrismaAnswersRepository implements AnswersRepository {
     })
 
     await this.answerAttachmentRepository.createMany(
-      answer.attachments.getItems()
+      answer.attachments.getItems(),
     )
   }
 
@@ -60,17 +60,17 @@ export class PrismaAnswersRepository implements AnswersRepository {
         },
       }),
       this.answerAttachmentRepository.createMany(
-        answer.attachments.getNewItems()
+        answer.attachments.getNewItems(),
       ),
       this.answerAttachmentRepository.deleteMany(
-        answer.attachments.getRemovedItems()
+        answer.attachments.getRemovedItems(),
       ),
     ])
   }
 
   async findManyByAnswerId(
     questionId: string,
-    { page }: PaginationParams
+    { page }: PaginationParams,
   ): Promise<Answer[]> {
     const answers = await this.prisma.answer.findMany({
       where: {

@@ -21,7 +21,7 @@ export class CreateQuestionController {
   async handle(
     @Body(new ZodValidationPipe(createQuestionBodySchema))
     body: CreateQuestionBodySchema,
-    @CurrentUser() user: UserPayload
+    @CurrentUser() user: UserPayload,
   ) {
     const { content, title, attachments } = body
     const { sub: userId } = user

@@ -54,7 +54,7 @@ export class Answer extends AggregateRoot<TAnswerProps> {
 
   static create(
     props: Optional<TAnswerProps, 'createdAt' | 'attachments'>,
-    id?: UniqueEntityID
+    id?: UniqueEntityID,
   ) {
     const answer = new Answer(
       {
@@ -62,7 +62,7 @@ export class Answer extends AggregateRoot<TAnswerProps> {
         createdAt: props.createdAt ?? new Date(),
         attachments: props.attachments ?? new AnswerAttachmentList(),
       },
-      id
+      id,
     )
 
     const isNewAnswer = !id

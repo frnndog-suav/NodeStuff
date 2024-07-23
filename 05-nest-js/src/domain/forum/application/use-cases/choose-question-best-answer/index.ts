@@ -22,7 +22,7 @@ export type TChooseAnswerBestAnswerUseCaseResponse = Either<
 export class ChooseAnswerBestAnswerUseCase {
   constructor(
     private answersRepository: AnswersRepository,
-    private questionsRepository: QuestionsRepository
+    private questionsRepository: QuestionsRepository,
   ) {}
 
   async execute({
@@ -36,7 +36,7 @@ export class ChooseAnswerBestAnswerUseCase {
     }
 
     const question = await this.questionsRepository.findById(
-      answer.questionId.toString()
+      answer.questionId.toString(),
     )
 
     if (!question) {

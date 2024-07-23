@@ -11,7 +11,7 @@ import { Injectable } from '@nestjs/common'
 
 export function makeQuestion(
   override: Partial<TQuestionProps> = {},
-  id?: UniqueEntityID
+  id?: UniqueEntityID,
 ) {
   return Question.create(
     {
@@ -20,7 +20,7 @@ export function makeQuestion(
       content: faker.lorem.text(),
       ...override,
     },
-    id
+    id,
   )
 }
 
@@ -29,7 +29,7 @@ export class QuestionFactory {
   constructor(private prisma: PrismaService) {}
 
   async makePrismaQuestion(
-    data: Partial<TQuestionProps> = {}
+    data: Partial<TQuestionProps> = {},
   ): Promise<Question> {
     const question = makeQuestion(data)
 

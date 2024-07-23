@@ -12,7 +12,7 @@ import { Injectable } from '@nestjs/common'
 
 export function makeAttachment(
   override: Partial<TAttachmentProps> = {},
-  id?: UniqueEntityID
+  id?: UniqueEntityID,
 ) {
   return Attachment.create(
     {
@@ -20,7 +20,7 @@ export function makeAttachment(
       url: faker.lorem.slug(),
       ...override,
     },
-    id
+    id,
   )
 }
 
@@ -29,7 +29,7 @@ export class AttachmentFactory {
   constructor(private prisma: PrismaService) {}
 
   async makePrismaAttachment(
-    data: Partial<TAttachmentProps> = {}
+    data: Partial<TAttachmentProps> = {},
   ): Promise<Attachment> {
     const attachment = makeAttachment(data)
 

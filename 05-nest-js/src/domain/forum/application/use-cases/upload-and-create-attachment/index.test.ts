@@ -13,7 +13,7 @@ describe('[Use Case] - Upload and create attachment', () => {
     fakeUploader = new FakeUploader()
     useCase = new UploadAndCreateAttachmentUseCase(
       inMemoryAttachmentsRepository,
-      fakeUploader
+      fakeUploader,
     )
   })
 
@@ -32,7 +32,7 @@ describe('[Use Case] - Upload and create attachment', () => {
     expect(fakeUploader.uploads[0]).toEqual(
       expect.objectContaining({
         fileName: 'profile.png',
-      })
+      }),
     )
   })
 

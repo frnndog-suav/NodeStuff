@@ -12,14 +12,14 @@ import {
 @Controller('/answers/:answerId/choose-as-best')
 export class ChooseQuestionBestAnswerController {
   constructor(
-    private chooseAnswerBestAnswerUseCase: ChooseAnswerBestAnswerUseCase
+    private chooseAnswerBestAnswerUseCase: ChooseAnswerBestAnswerUseCase,
   ) {}
 
   @Patch()
   @HttpCode(204)
   async handle(
     @CurrentUser() user: UserPayload,
-    @Param('answerId') answerId: string
+    @Param('answerId') answerId: string,
   ) {
     const { sub: userId } = user
 

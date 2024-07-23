@@ -13,7 +13,7 @@ describe('[Use Case] - Delete answer on comment', () => {
   beforeEach(() => {
     inMemoryStudentsRepository = new InMemoryStudentsRepository()
     inMemoryAnswersCommentRepository = new InMemoryAnswersCommentRepository(
-      inMemoryStudentsRepository
+      inMemoryStudentsRepository,
     )
     useCase = new DeleteCommentOnAnswerUseCase(inMemoryAnswersCommentRepository)
   })

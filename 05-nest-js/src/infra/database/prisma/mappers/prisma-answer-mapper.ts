@@ -12,7 +12,7 @@ export class PrismaAnswerMapper {
         updatedAt: raw.updatedAt,
         questionId: new UniqueEntityID(raw.questionId),
       },
-      new UniqueEntityID(raw.id)
+      new UniqueEntityID(raw.id),
     )
   }
 

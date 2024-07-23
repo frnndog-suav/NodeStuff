@@ -18,7 +18,7 @@ const queryValidationPipe = new ZodValidationPipe(pageQueryParamSchema)
 @Controller('/questions')
 export class FetchRecentQuestionsController {
   constructor(
-    private fetchRecentQuestionsUseCase: FetchRecentQuestionsUseCase
+    private fetchRecentQuestionsUseCase: FetchRecentQuestionsUseCase,
   ) {}
 
   @Get()
@@ -35,7 +35,7 @@ export class FetchRecentQuestionsController {
 
     return {
       questions: questions.map((question) =>
-        QuestionPresenter.toHttp(question)
+        QuestionPresenter.toHttp(question),
       ),
     }
   }

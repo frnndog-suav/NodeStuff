@@ -13,7 +13,7 @@ describe('[Use Case] - Fetch answer comments', () => {
   beforeEach(() => {
     inMemoryStudentsRepository = new InMemoryStudentsRepository()
     inMemoryRepository = new InMemoryAnswersCommentRepository(
-      inMemoryStudentsRepository
+      inMemoryStudentsRepository,
     )
     useCase = new FetchAnswerCommentsUseCase(inMemoryRepository)
   })
@@ -62,7 +62,7 @@ describe('[Use Case] - Fetch answer comments', () => {
           authorName: 'Test',
           commentId: comment3.id,
         }),
-      ])
+      ]),
     )
   })
 
@@ -76,7 +76,7 @@ describe('[Use Case] - Fetch answer comments', () => {
         makeAnswerComment({
           answerId: new UniqueEntityID('answer-1'),
           authorId: student.id,
-        })
+        }),
       )
     }
 

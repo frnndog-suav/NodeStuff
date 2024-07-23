@@ -8,6 +8,6 @@ export abstract class AnswersRepository {
   abstract save(answer: Answer): Promise<void>
   abstract findManyByAnswerId(
     questionId: string,
-    params: PaginationParams
+    params: PaginationParams,
   ): Promise<Answer[]>
 }

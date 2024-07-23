@@ -17,16 +17,16 @@ describe('[Use Case] - Comment on answer', () => {
     inMemoryStudentsRepository = new InMemoryStudentsRepository()
 
     inMemoryAnswersCommentRepository = new InMemoryAnswersCommentRepository(
-      inMemoryStudentsRepository
+      inMemoryStudentsRepository,
     )
     inMemoryAnswerAttachmentsRepository =
       new InMemoryAnswersAttachmentRepository()
     inMemoryAnswersRepository = new InMemoryAnswersRepository(
-      inMemoryAnswerAttachmentsRepository
+      inMemoryAnswerAttachmentsRepository,
     )
     useCase = new CommentOnAnswerUseCase(
       inMemoryAnswersRepository,
-      inMemoryAnswersCommentRepository
+      inMemoryAnswersCommentRepository,
     )
   })
 
@@ -42,7 +42,7 @@ describe('[Use Case] - Comment on answer', () => {
     })
 
     expect(inMemoryAnswersCommentRepository.items[0].content).toStrictEqual(
-      'Test comment'
+      'Test comment',
     )
   })
 })

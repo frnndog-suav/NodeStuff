@@ -23,7 +23,7 @@ export type TCommentOnAnswerUseCaseResponse = Either<
 export class CommentOnAnswerUseCase {
   constructor(
     private answersRepository: AnswersRepository,
-    private answersCommentRepository: AnswersCommentRepository
+    private answersCommentRepository: AnswersCommentRepository,
   ) {}
 
   async execute({

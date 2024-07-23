@@ -30,7 +30,7 @@ export class EditQuestionController {
     @Body(new ZodValidationPipe(editQuestionBodySchema))
     body: EditQuestionBodySchema,
     @CurrentUser() user: UserPayload,
-    @Param('id') questionId: string
+    @Param('id') questionId: string,
   ) {
     const { content, title, attachments } = body
     const { sub: userId } = user

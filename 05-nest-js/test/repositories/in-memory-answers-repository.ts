@@ -15,7 +15,7 @@ export class InMemoryAnswersRepository implements AnswersRepository {
     this.items.push(answer)
 
     await this.answerAttachmentRepository.createMany(
-      answer.attachments.getItems()
+      answer.attachments.getItems(),
     )
 
     DomainEvents.dispatchEventsForAggregate(answer.id)
@@ -43,11 +43,11 @@ export class InMemoryAnswersRepository implements AnswersRepository {
     this.items[itemIndex] = answer
 
     await this.answerAttachmentRepository.createMany(
-      answer.attachments.getNewItems()
+      answer.attachments.getNewItems(),
     )
 
     await this.answerAttachmentRepository.deleteMany(
-      answer.attachments.getRemovedItems()
+      answer.attachments.getRemovedItems(),
     )
 
     DomainEvents.dispatchEventsForAggregate(answer.id)
@@ -55,7 +55,7 @@ export class InMemoryAnswersRepository implements AnswersRepository {
 
   async findManyByAnswerId(
     questionId: string,
-    { page }: PaginationParams
+    { page }: PaginationParams,
   ): Promise<Answer[]> {
     const answers = this.items
       .filter((answer) => answer.questionId.toString() === questionId)

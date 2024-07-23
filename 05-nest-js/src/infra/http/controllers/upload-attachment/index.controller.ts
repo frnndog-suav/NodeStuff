@@ -15,7 +15,7 @@ import { FileInterceptor } from '@nestjs/platform-express'
 @Controller('/attachments')
 export class UploadAttachmentController {
   constructor(
-    private uploadAndCreateAttachmentUseCase: UploadAndCreateAttachmentUseCase
+    private uploadAndCreateAttachmentUseCase: UploadAndCreateAttachmentUseCase,
   ) {}
 
   @Post()
@@ -29,9 +29,9 @@ export class UploadAttachmentController {
           }),
           new FileTypeValidator({ fileType: '.(png|jpg|jpeg|pdf)' }),
         ],
-      })
+      }),
     )
-    file: Express.Multer.File
+    file: Express.Multer.File,
   ) {
     const result = await this.uploadAndCreateAttachmentUseCase.execute({
       fileName: file.originalname,

@@ -47,7 +47,7 @@ export class PrismaQuestionsCommentsRepository
 
   async findManyByQuestionId(
     questionId: string,
-    { page }: PaginationParams
+    { page }: PaginationParams,
   ): Promise<QuestionComment[]> {
     const questionComments = await this.prisma.comment.findMany({
       where: {
@@ -67,7 +67,7 @@ export class PrismaQuestionsCommentsRepository
 
   async findManyByQuestionIdWithAuthor(
     questionId: string,
-    { page }: PaginationParams
+    { page }: PaginationParams,
   ): Promise<CommentWithAuthor[]> {
     const comments = await this.prisma.comment.findMany({
       where: {

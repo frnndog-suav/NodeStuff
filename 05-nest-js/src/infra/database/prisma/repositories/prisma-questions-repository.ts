@@ -2,7 +2,9 @@ import { PaginationParams } from '@/core/repositories/pagination-params'
 import { QuestionAttachmentRepository } from '@/domain/forum/application/repositories/question-attachments'
 import { QuestionsRepository } from '@/domain/forum/application/repositories/questions'
 import { Question } from '@/domain/forum/enterprise/entities/question'
+import { QuestionDetails } from '@/domain/forum/enterprise/entities/value-objects/question-details'
 import { Injectable } from '@nestjs/common'
+import { PrismaQuestionDetailsMapper } from '../mappers/prisma-question-details-mapper'
 import { PrismaQuestionMapper } from '../mappers/prisma-questions-mapper'
 import { PrismaService } from '../prisma.service'
 
@@ -12,7 +14,7 @@ const ITEMS_PER_PAGE = 20
 export class PrismaQuestionsRepository implements QuestionsRepository {
   constructor(
     private readonly prisma: PrismaService,
-    private questionAttachmentRepository: QuestionAttachmentRepository
+    private questionAttachmentRepository: QuestionAttachmentRepository,
   ) {}
 
   async create(question: Question): Promise<void> {
@@ -23,7 +25,7 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
     })
 
     await this.questionAttachmentRepository.createMany(
-      question.attachments.getItems()
+      question.attachments.getItems(),
     )
   }
 
@@ -76,10 +78,10 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
         },
       }),
       this.questionAttachmentRepository.createMany(
-        question.attachments.getNewItems()
+        question.attachments.getNewItems(),
       ),
       this.questionAttachmentRepository.deleteMany(
-        question.attachments.getRemovedItems()
+        question.attachments.getRemovedItems(),
       ),
     ])
   }
@@ -96,5 +98,23 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
     return questions.map((question) => {
       return PrismaQuestionMapper.toDomain(question)
     })
+  }
+
+  async findDetailsBySlug(slug: string): Promise<QuestionDetails | null> {
+    const question = await this.prisma.question.findUnique({
+      where: {
+        slug,
+      },
+      include: {
+        author: true,
+        attachments: true,
+      },
+    })
+
+    if (!question) {
+      return null
+    }
+
+    return PrismaQuestionDetailsMapper.toDomain(question)
   }
 }

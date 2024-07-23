@@ -26,7 +26,7 @@ export class CommentOnQuestionController {
     @Body(new ZodValidationPipe(commentOnQuestionBodySchema))
     body: CommentOnQuestionBodySchema,
     @CurrentUser() user: UserPayload,
-    @Param('questionId') questionId: string
+    @Param('questionId') questionId: string,
   ) {
     const { content } = body
     const { sub: userId } = user

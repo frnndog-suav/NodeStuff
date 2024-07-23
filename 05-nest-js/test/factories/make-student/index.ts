@@ -11,7 +11,7 @@ import { Injectable } from '@nestjs/common'
 
 export function makeStudent(
   override: Partial<TStudentProps> = {},
-  id?: UniqueEntityID
+  id?: UniqueEntityID,
 ) {
   return Student.create(
     {
@@ -20,7 +20,7 @@ export function makeStudent(
       password: faker.internet.password(),
       ...override,
     },
-    id
+    id,
   )
 }
 

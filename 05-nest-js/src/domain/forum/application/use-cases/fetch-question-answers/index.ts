@@ -27,7 +27,7 @@ export class FetchQuestionAnswersUseCase {
       questionId,
       {
         page,
-      }
+      },
     )
 
     return right({

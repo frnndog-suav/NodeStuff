@@ -8,11 +8,11 @@ export abstract class QuestionCommentsRepository {
   abstract delete(questionComment: QuestionComment): Promise<void>
   abstract findManyByQuestionId(
     questionId: string,
-    params: PaginationParams
+    params: PaginationParams,
   ): Promise<QuestionComment[]>
 
   abstract findManyByQuestionIdWithAuthor(
     questionId: string,
-    params: PaginationParams
+    params: PaginationParams,
   ): Promise<CommentWithAuthor[]>
 }
