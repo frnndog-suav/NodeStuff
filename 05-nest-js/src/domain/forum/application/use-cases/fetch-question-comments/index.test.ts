@@ -46,7 +46,6 @@ describe('[Use Case] - Fetch question comments', () => {
       questionId: 'question-1',
       page: 1,
     })
-    console.log('result.value?.comments', result.value?.comments[0])
 
     expect(result.value?.comments).toHaveLength(3)
     expect(result.value?.comments).toEqual(
