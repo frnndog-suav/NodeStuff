@@ -1,21 +1,30 @@
 import { UniqueEntityID } from '@/domain/forum/enterprise/entities/value-objects/unique-entity-id'
 import { makeQuestion } from 'test/factories/make-question'
 import { makeQuestionAttachment } from 'test/factories/make-question-attachment'
+import { InMemoryAttachmentsRepository } from 'test/repositories/in-memory-attachments-repository'
 import { InMemoryQuestionsAttachmentRepository } from 'test/repositories/in-memory-question-attachments-repository'
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
+import { InMemoryStudentsRepository } from 'test/repositories/in-memory-student-repository'
 import { DeleteQuestionUseCase } from '.'
 import { NotAllowedError } from '../_errors/not-allowed-error'
 
 let inMemoryQuestionRepository: InMemoryQuestionsRepository
 let inMemoryQuestionAttachmentRepository: InMemoryQuestionsAttachmentRepository
+let inMemoryAttachmentsRepository: InMemoryAttachmentsRepository
+let inMemoryStudentsRepository: InMemoryStudentsRepository
 let useCase: DeleteQuestionUseCase
 
 describe('[Use Case] - Delete question', () => {
   beforeEach(() => {
+    inMemoryAttachmentsRepository = new InMemoryAttachmentsRepository()
+    inMemoryStudentsRepository = new InMemoryStudentsRepository()
+
     inMemoryQuestionAttachmentRepository =
       new InMemoryQuestionsAttachmentRepository()
     inMemoryQuestionRepository = new InMemoryQuestionsRepository(
       inMemoryQuestionAttachmentRepository,
+      inMemoryAttachmentsRepository,
+      inMemoryStudentsRepository
     )
     useCase = new DeleteQuestionUseCase(inMemoryQuestionRepository)
   })
@@ -25,7 +34,7 @@ describe('[Use Case] - Delete question', () => {
       {
         authorId: new UniqueEntityID('author-1'),
       },
-      new UniqueEntityID('question-1'),
+      new UniqueEntityID('question-1')
     )
 
     inMemoryQuestionRepository.create(newQuestion)
@@ -38,7 +47,7 @@ describe('[Use Case] - Delete question', () => {
       makeQuestionAttachment({
         questionId: newQuestion.id,
         attachmentId: new UniqueEntityID('2'),
-      }),
+      })
     )
 
     await useCase.execute({
@@ -55,7 +64,7 @@ describe('[Use Case] - Delete question', () => {
       {
         authorId: new UniqueEntityID('author-2'),
       },
-      new UniqueEntityID('question-1'),
+      new UniqueEntityID('question-1')
     )
 
     inMemoryQuestionRepository.create(newQuestion)

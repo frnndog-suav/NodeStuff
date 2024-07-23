@@ -1,26 +1,36 @@
 import { makeQuestion } from 'test/factories/make-question'
+import { InMemoryAttachmentsRepository } from 'test/repositories/in-memory-attachments-repository'
 import { InMemoryQuestionsAttachmentRepository } from 'test/repositories/in-memory-question-attachments-repository'
 import { InMemoryQuestionsCommentRepository } from 'test/repositories/in-memory-questions-comment-repository'
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
+import { InMemoryStudentsRepository } from 'test/repositories/in-memory-student-repository'
 import { CommentOnQuestionUseCase } from '.'
 
 let inMemoryQuestionsCommentRepository: InMemoryQuestionsCommentRepository
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 let inMemoryQuestionAttachmentsRepository: InMemoryQuestionsAttachmentRepository
+let inMemoryAttachmentsRepository: InMemoryAttachmentsRepository
+let inMemoryStudentsRepository: InMemoryStudentsRepository
 let useCase: CommentOnQuestionUseCase
 
 describe('[Use Case] - Comment on question', () => {
   beforeEach(() => {
-    inMemoryQuestionsCommentRepository =
-      new InMemoryQuestionsCommentRepository()
+    inMemoryAttachmentsRepository = new InMemoryAttachmentsRepository()
+    inMemoryStudentsRepository = new InMemoryStudentsRepository()
+
+    inMemoryQuestionsCommentRepository = new InMemoryQuestionsCommentRepository(
+      inMemoryStudentsRepository
+    )
     inMemoryQuestionAttachmentsRepository =
       new InMemoryQuestionsAttachmentRepository()
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
       inMemoryQuestionAttachmentsRepository,
+      inMemoryAttachmentsRepository,
+      inMemoryStudentsRepository
     )
     useCase = new CommentOnQuestionUseCase(
       inMemoryQuestionsRepository,
-      inMemoryQuestionsCommentRepository,
+      inMemoryQuestionsCommentRepository
     )
   })
 
@@ -36,7 +46,7 @@ describe('[Use Case] - Comment on question', () => {
     })
 
     expect(inMemoryQuestionsCommentRepository.items[0].content).toStrictEqual(
-      'Test comment',
+      'Test comment'
     )
   })
 })

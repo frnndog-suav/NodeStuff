@@ -7,29 +7,38 @@ import { InMemoryQuestionsAttachmentRepository } from 'test/repositories/in-memo
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { ChooseAnswerBestAnswerUseCase } from '.'
 import { NotAllowedError } from '../_errors/not-allowed-error'
+import { InMemoryAttachmentsRepository } from 'test/repositories/in-memory-attachments-repository'
+import { InMemoryStudentsRepository } from 'test/repositories/in-memory-student-repository'
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 let inMemoryAnswerAttachmentsRepository: InMemoryAnswersAttachmentRepository
 let inMemoryQuestionAttachmentsRepository: InMemoryQuestionsAttachmentRepository
+let inMemoryAttachmentsRepository: InMemoryAttachmentsRepository
+let inMemoryStudentsRepository: InMemoryStudentsRepository
 
 let useCase: ChooseAnswerBestAnswerUseCase
 
 describe('[Use Case] - Choose question best answer', () => {
   beforeEach(() => {
+    inMemoryAttachmentsRepository = new InMemoryAttachmentsRepository()
+    inMemoryStudentsRepository = new InMemoryStudentsRepository()
+
     inMemoryAnswerAttachmentsRepository =
       new InMemoryAnswersAttachmentRepository()
     inMemoryQuestionAttachmentsRepository =
       new InMemoryQuestionsAttachmentRepository()
     inMemoryAnswersRepository = new InMemoryAnswersRepository(
-      inMemoryAnswerAttachmentsRepository,
+      inMemoryAnswerAttachmentsRepository
     )
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
       inMemoryQuestionAttachmentsRepository,
+      inMemoryAttachmentsRepository,
+      inMemoryStudentsRepository
     )
     useCase = new ChooseAnswerBestAnswerUseCase(
       inMemoryAnswersRepository,
-      inMemoryQuestionsRepository,
+      inMemoryQuestionsRepository
     )
   })
 
@@ -48,7 +57,7 @@ describe('[Use Case] - Choose question best answer', () => {
     })
 
     expect(inMemoryQuestionsRepository.items[0].bestAnswerID).toStrictEqual(
-      answer.id,
+      answer.id
     )
   })
 
