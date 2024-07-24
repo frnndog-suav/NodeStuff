@@ -3,12 +3,14 @@ import { EventHandler } from '@/core/events/event-handler'
 import { AnswersRepository } from '@/domain/forum/application/repositories/answers'
 import { ResourceNotFoundError } from '@/domain/forum/application/use-cases/_errors/resource-not-found'
 import { QuestionBestAnswerChosenEvent } from '@/domain/forum/enterprise/entities/events/question-best-answer-chosen-event'
+import { Injectable } from '@nestjs/common'
 import { SendNotificationUseCase } from '../../use-cases/send-notification'
 
+@Injectable()
 export class OnQuestionBestAnswerChosen implements EventHandler {
   constructor(
     private answersRepository: AnswersRepository,
-    private sendNotification: SendNotificationUseCase,
+    private sendNotification: SendNotificationUseCase
   ) {
     this.setupSubscriptions()
   }
@@ -16,7 +18,7 @@ export class OnQuestionBestAnswerChosen implements EventHandler {
   setupSubscriptions(): void {
     DomainEvents.register(
       this.sendNewQuestionBestAnswerNotification.bind(this),
-      QuestionBestAnswerChosenEvent.name,
+      QuestionBestAnswerChosenEvent.name
     )
   }
 
@@ -25,7 +27,7 @@ export class OnQuestionBestAnswerChosen implements EventHandler {
     bestAnswerId,
   }: QuestionBestAnswerChosenEvent) {
     const answer = await this.answersRepository.findById(
-      bestAnswerId.toString(),
+      bestAnswerId.toString()
     )
 
     if (!answer) {

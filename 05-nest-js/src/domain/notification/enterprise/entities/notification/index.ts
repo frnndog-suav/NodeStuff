@@ -7,7 +7,7 @@ export type TNotificationProps = {
   content: string
   createdAt: Date
   recipientId: UniqueEntityID
-  readAt?: Date
+  readAt?: Date | null
 }
 
 export class Notification extends Entity<TNotificationProps> {
@@ -37,14 +37,14 @@ export class Notification extends Entity<TNotificationProps> {
 
   static create(
     props: Optional<TNotificationProps, 'createdAt'>,
-    id?: UniqueEntityID,
+    id?: UniqueEntityID
   ) {
     const notification = new Notification(
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
       },
-      id,
+      id
     )
 
     return notification

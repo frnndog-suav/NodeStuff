@@ -4,7 +4,9 @@ import { QuestionsRepository } from '@/domain/forum/application/repositories/que
 import { ResourceNotFoundError } from '@/domain/forum/application/use-cases/_errors/resource-not-found'
 import { AnswerCreatedEvent } from '@/domain/forum/enterprise/entities/events/answer-created-event'
 import { SendNotificationUseCase } from '../../use-cases/send-notification'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class OnAnswerCreated implements EventHandler {
   constructor(
     private questionsRepository: QuestionsRepository,
