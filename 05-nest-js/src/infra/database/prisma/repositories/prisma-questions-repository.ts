@@ -4,6 +4,7 @@ import { QuestionAttachmentRepository } from '@/domain/forum/application/reposit
 import { QuestionsRepository } from '@/domain/forum/application/repositories/questions'
 import { Question } from '@/domain/forum/enterprise/entities/question'
 import { QuestionDetails } from '@/domain/forum/enterprise/entities/value-objects/question-details'
+import { CacheRepository } from '@/infra/cache/cache-repository'
 import { Injectable } from '@nestjs/common'
 import { PrismaQuestionDetailsMapper } from '../mappers/prisma-question-details-mapper'
 import { PrismaQuestionMapper } from '../mappers/prisma-questions-mapper'
@@ -15,6 +16,7 @@ const ITEMS_PER_PAGE = 20
 export class PrismaQuestionsRepository implements QuestionsRepository {
   constructor(
     private readonly prisma: PrismaService,
+    private readonly cacheRepository: CacheRepository,
     private questionAttachmentRepository: QuestionAttachmentRepository
   ) {}
 
@@ -33,6 +35,14 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
   }
 
   async findBySlug(slug: string): Promise<Question | null> {
+    const cacheHit = await this.cacheRepository.get(`question:${slug}:details`)
+
+    if (cacheHit) {
+      const cacheData = JSON.parse(cacheHit)
+
+      return cacheData
+    }
+
     const question = await this.prisma.question.findUnique({
       where: {
         slug,
@@ -43,7 +53,14 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
       return null
     }
 
-    return PrismaQuestionMapper.toDomain(question)
+    const details = PrismaQuestionMapper.toDomain(question)
+
+    await this.cacheRepository.set(
+      `question:${slug}:details`,
+      JSON.stringify(details)
+    )
+
+    return details
   }
 
   async findById(id: string): Promise<Question | null> {
@@ -86,6 +103,7 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
       this.questionAttachmentRepository.deleteMany(
         question.attachments.getRemovedItems()
       ),
+      this.cacheRepository.delete(`question:${data.slug}:details`),
     ])
 
     DomainEvents.dispatchEventsForAggregate(question.id)
