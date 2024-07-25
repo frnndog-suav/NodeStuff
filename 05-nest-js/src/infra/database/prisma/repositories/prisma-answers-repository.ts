@@ -1,3 +1,4 @@
+import { DomainEvents } from '@/core/events/domain-events'
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { AnswerAttachmentRepository } from '@/domain/forum/application/repositories/answer-attachments'
 import { AnswersRepository } from '@/domain/forum/application/repositories/answers'
@@ -12,7 +13,7 @@ const ITEMS_PER_PAGE = 20
 export class PrismaAnswersRepository implements AnswersRepository {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly answerAttachmentRepository: AnswerAttachmentRepository,
+    private readonly answerAttachmentRepository: AnswerAttachmentRepository
   ) {}
 
   async create(answer: Answer): Promise<void> {
@@ -23,8 +24,10 @@ export class PrismaAnswersRepository implements AnswersRepository {
     })
 
     await this.answerAttachmentRepository.createMany(
-      answer.attachments.getItems(),
+      answer.attachments.getItems()
     )
+
+    DomainEvents.dispatchEventsForAggregate(answer.id)
   }
 
   async findById(id: string): Promise<Answer | null> {
@@ -60,17 +63,19 @@ export class PrismaAnswersRepository implements AnswersRepository {
         },
       }),
       this.answerAttachmentRepository.createMany(
-        answer.attachments.getNewItems(),
+        answer.attachments.getNewItems()
       ),
       this.answerAttachmentRepository.deleteMany(
-        answer.attachments.getRemovedItems(),
+        answer.attachments.getRemovedItems()
       ),
     ])
+
+    DomainEvents.dispatchEventsForAggregate(answer.id)
   }
 
   async findManyByAnswerId(
     questionId: string,
-    { page }: PaginationParams,
+    { page }: PaginationParams
   ): Promise<Answer[]> {
     const answers = await this.prisma.answer.findMany({
       where: {

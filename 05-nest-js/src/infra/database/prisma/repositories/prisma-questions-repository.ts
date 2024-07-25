@@ -1,3 +1,4 @@
+import { DomainEvents } from '@/core/events/domain-events'
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { QuestionAttachmentRepository } from '@/domain/forum/application/repositories/question-attachments'
 import { QuestionsRepository } from '@/domain/forum/application/repositories/questions'
@@ -14,7 +15,7 @@ const ITEMS_PER_PAGE = 20
 export class PrismaQuestionsRepository implements QuestionsRepository {
   constructor(
     private readonly prisma: PrismaService,
-    private questionAttachmentRepository: QuestionAttachmentRepository,
+    private questionAttachmentRepository: QuestionAttachmentRepository
   ) {}
 
   async create(question: Question): Promise<void> {
@@ -25,8 +26,10 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
     })
 
     await this.questionAttachmentRepository.createMany(
-      question.attachments.getItems(),
+      question.attachments.getItems()
     )
+
+    DomainEvents.dispatchEventsForAggregate(question.id)
   }
 
   async findBySlug(slug: string): Promise<Question | null> {
@@ -78,12 +81,14 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
         },
       }),
       this.questionAttachmentRepository.createMany(
-        question.attachments.getNewItems(),
+        question.attachments.getNewItems()
       ),
       this.questionAttachmentRepository.deleteMany(
-        question.attachments.getRemovedItems(),
+        question.attachments.getRemovedItems()
       ),
     ])
+
+    DomainEvents.dispatchEventsForAggregate(question.id)
   }
 
   async findManyRecent({ page }: PaginationParams): Promise<Question[]> {

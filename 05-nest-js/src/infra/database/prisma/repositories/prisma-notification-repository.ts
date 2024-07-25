@@ -12,7 +12,14 @@ export class PrismaNotificationsRepository implements NotificationsRepository {
     const data = PrismaNotificationMapper.toPrisma(notification)
 
     await this.prisma.notification.create({
-      data,
+      data: {
+        content: data.content,
+        title: data.title,
+        createdAt: data.createdAt,
+        id: data.id,
+        readAt: data.readAt,
+        recipientId: data.recipientId,
+      },
     })
   }
 
@@ -35,7 +42,7 @@ export class PrismaNotificationsRepository implements NotificationsRepository {
 
     await this.prisma.notification.update({
       where: {
-        id: data.id,
+        id: data.id?.toString(),
       },
       data,
     })
