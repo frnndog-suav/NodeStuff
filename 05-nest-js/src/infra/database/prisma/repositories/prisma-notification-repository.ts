@@ -9,7 +9,11 @@ export class PrismaNotificationsRepository implements NotificationsRepository {
   constructor(private prisma: PrismaService) {}
 
   async create(notification: Notification): Promise<void> {
+    console.log('=========notification', notification)
+
     const data = PrismaNotificationMapper.toPrisma(notification)
+
+    console.log('data============', data)
 
     await this.prisma.notification.create({
       data: {
