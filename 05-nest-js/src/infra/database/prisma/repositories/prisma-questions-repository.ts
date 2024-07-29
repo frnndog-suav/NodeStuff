@@ -35,14 +35,6 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
   }
 
   async findBySlug(slug: string): Promise<Question | null> {
-    const cacheHit = await this.cacheRepository.get(`question:${slug}:details`)
-
-    if (cacheHit) {
-      const cacheData = JSON.parse(cacheHit)
-
-      return cacheData
-    }
-
     const question = await this.prisma.question.findUnique({
       where: {
         slug,
@@ -53,14 +45,7 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
       return null
     }
 
-    const details = PrismaQuestionMapper.toDomain(question)
-
-    await this.cacheRepository.set(
-      `question:${slug}:details`,
-      JSON.stringify(details)
-    )
-
-    return details
+    return PrismaQuestionMapper.toDomain(question)
   }
 
   async findById(id: string): Promise<Question | null> {
@@ -124,6 +109,14 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
   }
 
   async findDetailsBySlug(slug: string): Promise<QuestionDetails | null> {
+    const cacheHit = await this.cacheRepository.get(`question:${slug}:details`)
+
+    if (cacheHit) {
+      const cacheData = JSON.parse(cacheHit)
+
+      return cacheData
+    }
+
     const question = await this.prisma.question.findUnique({
       where: {
         slug,
@@ -138,6 +131,13 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
       return null
     }
 
-    return PrismaQuestionDetailsMapper.toDomain(question)
+    const details = PrismaQuestionDetailsMapper.toDomain(question)
+
+    await this.cacheRepository.set(
+      `question:${slug}:details`,
+      JSON.stringify(details)
+    )
+
+    return details
   }
 }
