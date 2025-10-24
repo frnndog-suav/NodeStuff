@@ -3,7 +3,9 @@ import { Request, Response } from "express";
 
 class UsersController {
   async index(request: Request, response: Response) {
-    return response.json();
+    const users = await prisma.user.findMany();
+
+    return response.json(users);
   }
 
   async create(request: Request, response: Response) {
