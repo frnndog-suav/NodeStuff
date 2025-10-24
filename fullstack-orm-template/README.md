@@ -1,0 +1,1 @@
+- Inicializando o prisma `npx prisma init --datasource-provider postgresql`
