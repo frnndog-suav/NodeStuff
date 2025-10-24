@@ -1,0 +1,36 @@
+{
+  "name": "misadventureproject_backend",
+  "version": "1.0.0",
+  "description": "API REST com Express",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "knex": "tsx ./node_modules/knex/bin/cli.js",
+    "build": "tsc",
+    "start": "node dist/src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frnndog-suav/MisadventureProject_Backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/frnndog-suav/MisadventureProject_Backend/issues"
+  },
+  "homepage": "https://github.com/frnndog-suav/MisadventureProject_Backend#readme",
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.9.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "knex": "^3.1.0",
+    "sqlite3": "^5.1.7",
+    "zod": "^4.1.12"
+  }
+}
