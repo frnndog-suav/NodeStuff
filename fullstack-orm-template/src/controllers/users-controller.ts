@@ -22,7 +22,15 @@ class UsersController {
   }
 
   async show(request: Request, response: Response) {
-    return response.json();
+    const { id } = request.params;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return response.json(user);
   }
 }
 
