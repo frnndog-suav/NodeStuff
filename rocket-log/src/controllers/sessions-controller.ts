@@ -1,7 +1,9 @@
+import { authConfig } from "@/configs/auth";
 import { prisma } from "@/database/prisma";
 import { AppError } from "@/utils/app-error";
 import { compare } from "bcrypt";
 import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
 import z from "zod";
 
 export class SessionsController {
@@ -13,22 +15,33 @@ export class SessionsController {
 
     const { email, password } = bodySchema.parse(req.body);
 
-    const userWithSameEmail = await prisma.user.findFirst({
+    const user = await prisma.user.findFirst({
       where: {
         email,
       },
     });
 
-    if (!userWithSameEmail) {
+    if (!user) {
       throw new AppError("Invalid email or password", 401);
     }
 
-    const passwordMatched = await compare(password, userWithSameEmail.password);
+    const passwordMatched = await compare(password, user.password);
 
     if (!passwordMatched) {
       throw new AppError("Invalid email or password", 401);
     }
 
-    
+    const { expiresIn, secret } = authConfig.jwt;
+
+    const token = jwt.sign(
+      { role: user.role ?? "customer" },
+      secret || "asdassd",
+      {
+        subject: user.id,
+        expiresIn,
+      }
+    );
+
+    return res.status(200).json({ token });
   }
 }
