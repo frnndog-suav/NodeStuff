@@ -1,15 +1,60 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../database/prisma/generated"
+  provider = "prisma-client"  
+  output = "../src/database/prisma/generated"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+enum EUserRole {
+  customer
+  sale
+}
+
+enum EDeliverStatus {
+  processing
+  shipped
+  delivered
+}
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String
+  role EUserRole @default(customer)
+  password String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+ 
+ deliveries Deliver[]
+
+  @@map("users")
+}
+
+model Deliver {
+  id String @id @default(uuid())
+  userId String @map("user_id")
+  description String
+  status EDeliverStatus @default(processing)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id])
+  deliveryLogs DeliveryLog[]
+
+  @@map("delivers")
+}
+
+model DeliveryLog {
+  id String @id @default(uuid())
+  description String
+  deliverId String @map("deliver_id") 
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  deliver Deliver @relation(fields: [deliverId], references: [id])
+
+    @@map("delivery_logs")
 }
