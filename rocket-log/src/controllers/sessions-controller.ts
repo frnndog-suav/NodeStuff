@@ -33,14 +33,10 @@ export class SessionsController {
 
     const { expiresIn, secret } = authConfig.jwt;
 
-    const token = jwt.sign(
-      { role: user.role ?? "customer" },
-      secret || "asdassd",
-      {
-        subject: user.id,
-        expiresIn,
-      }
-    );
+    const token = jwt.sign({ role: user.role ?? "customer" }, secret, {
+      subject: user.id,
+      expiresIn,
+    });
 
     return res.status(200).json({ token });
   }
