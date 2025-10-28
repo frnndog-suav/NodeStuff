@@ -4,7 +4,7 @@
   "description": "API de entregas",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts"
+    "dev": "tsx watch --env-file .env src/server.ts"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/node": "^24.9.1",
     "express": "^5.1.0",
+    "prisma": "^6.18.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {
