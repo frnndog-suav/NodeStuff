@@ -36,7 +36,7 @@ export class UsersController {
       },
     });
 
-    return res.json({
+    return res.status(201).json({
       name: user.name,
       email: user.email,
     });
