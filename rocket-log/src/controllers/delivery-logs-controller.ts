@@ -28,6 +28,10 @@ export class DeliveryLogsController {
       );
     }
 
+    if (delivery.status === "delivered") {
+      throw new AppError("This order has already been delivered");
+    }
+
     await prisma.deliveryLog.create({
       data: {
         deliverId: delivery.id,
