@@ -27,12 +27,36 @@ export class DeliveriesController {
         user: {
           select: {
             name: true,
-            email: true
-          }
-        }
-      }
+            email: true,
+          },
+        },
+      },
     });
 
     return response.json(deliveries);
+  }
+
+  async update(request: Request, response: Response) {
+    const paramsSchema = z.object({
+      id: z.uuid(),
+    });
+
+    const bodySchema = z.object({
+      status: z.enum(["processing", "shipped", "delivered"]),
+    });
+
+    const { id } = paramsSchema.parse(request.params);
+    const { status } = bodySchema.parse(request.body);
+
+    await prisma.deliver.update({
+      data: {
+        status,
+      },
+      where: {
+        id,
+      },
+    });
+
+    return response.json();
   }
 }
