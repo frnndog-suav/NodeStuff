@@ -22,7 +22,16 @@ export class DeliveriesController {
   }
 
   async list(request: Request, response: Response, next: NextFunction) {
-    const deliveries = await prisma.deliver.findMany();
+    const deliveries = await prisma.deliver.findMany({
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true
+          }
+        }
+      }
+    });
 
     return response.json(deliveries);
   }
