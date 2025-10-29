@@ -1,7 +1,23 @@
+import { prisma } from "@/database/prisma";
 import { NextFunction, Request, Response } from "express";
+import z from "zod";
 
 export class DeliveriesController {
-  create(request: Request, response: Response, next: NextFunction) {
-    return response.json({ message: "tudo certo" });
+  async create(request: Request, response: Response, next: NextFunction) {
+    const bodySchema = z.object({
+      user_id: z.uuid(),
+      description: z.string(),
+    });
+
+    const { description, user_id } = bodySchema.parse(request.body);
+
+    await prisma.deliver.create({
+      data: {
+        userId: user_id,
+        description,
+      },
+    });
+
+    return response.status(201).json();
   }
 }

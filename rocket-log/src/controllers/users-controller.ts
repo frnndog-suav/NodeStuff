@@ -7,14 +7,15 @@ import z from "zod";
 const BCRYPT_SALT = 8;
 
 export class UsersController {
-  async create(req: Request, res: Response, next: NextFunction) {
+  async create(req: Request, res: Response, _next: NextFunction) {
     const bodySchema = z.object({
       name: z.string().trim().min(3),
       email: z.email(),
       password: z.string().min(6),
+      role: z.enum(["customer", "sale"]).default("customer"),
     });
 
-    const { email, name, password } = bodySchema.parse(req.body);
+    const { email, name, password, role } = bodySchema.parse(req.body);
 
     const hashedPassword = await hash(password, BCRYPT_SALT);
 
@@ -32,6 +33,7 @@ export class UsersController {
       data: {
         name,
         email,
+        role,
         password: hashedPassword,
       },
     });
