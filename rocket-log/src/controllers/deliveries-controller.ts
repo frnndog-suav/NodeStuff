@@ -57,6 +57,13 @@ export class DeliveriesController {
       },
     });
 
+    await prisma.deliveryLog.create({
+      data: {
+        deliverId: id,
+        description: status
+      }
+    })
+
     return response.json();
   }
 }
