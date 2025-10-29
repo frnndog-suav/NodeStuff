@@ -20,4 +20,10 @@ export class DeliveriesController {
 
     return response.status(201).json();
   }
+
+  async list(request: Request, response: Response, next: NextFunction) {
+    const deliveries = await prisma.deliver.findMany();
+
+    return response.json(deliveries);
+  }
 }
