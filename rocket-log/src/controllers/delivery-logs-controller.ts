@@ -37,4 +37,31 @@ export class DeliveryLogsController {
 
     return response.status(201).json();
   }
+
+  async info(request: Request, response: Response, next: NextFunction) {
+    const paramsSchema = z.object({
+      delivery_id: z.uuid(),
+    });
+
+    const { delivery_id } = paramsSchema.parse(request.body);
+
+    const delivery = await prisma.deliver.findUnique({
+      where: {
+        id: delivery_id,
+      },
+    });
+
+    if (!delivery) {
+      throw new AppError("Delivery not found.", 404);
+    }
+
+    if (
+      request.user?.role === "customer" &&
+      request.user.id !== delivery.userId
+    ) {
+      throw new AppError("A user can only check their own deliveries.");
+    }
+
+    return response.status(200).json(delivery);
+  }
 }
