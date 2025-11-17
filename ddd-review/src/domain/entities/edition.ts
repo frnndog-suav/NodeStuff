@@ -4,19 +4,19 @@ type TConstructorParams = {
   id?: string;
   title: string;
   description: string;
-  createdById: string;
+  creatorId: string;
 };
 
 export class Edition {
   public id: string;
   public title: string;
+  public creatorId: string;
   public description: string;
-  public createdById: string;
 
-  constructor({ id, title, description, createdById }: TConstructorParams) {
+  constructor({ id, title, description, creatorId }: TConstructorParams) {
     this.title = title;
+    this.creatorId = creatorId;
     this.id = id ?? randomUUID();
     this.description = description;
-    this.createdById = createdById;
   }
 }

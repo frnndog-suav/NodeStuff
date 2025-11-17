@@ -11,7 +11,7 @@ export class CreateEditionUseCase {
     const edition = new Edition({
       title,
       description,
-      createdById: userId,
+      creatorId: userId,
     });
 
     return edition;

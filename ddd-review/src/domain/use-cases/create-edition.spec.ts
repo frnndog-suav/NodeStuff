@@ -15,6 +15,6 @@ test("create an edition", () => {
   });
 
   expect(edition.title).toEqual(title);
-  expect(edition.createdById).toEqual(userId);
+  expect(edition.creatorId).toEqual(userId);
   expect(edition.description).toEqual(description);
 });
