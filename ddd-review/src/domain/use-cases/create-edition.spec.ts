@@ -1,14 +1,22 @@
 import { expect, test } from "vitest";
+import { Edition } from "../entities/edition";
+import { EditionsRepository } from "../repositories/editions-repository";
 import { CreateEditionUseCase } from "./create-edition";
 
-test("create an edition", () => {
+const fakeEditionsRepository: EditionsRepository = {
+  async create(edition: Edition): Promise<void> {
+    return;
+  },
+};
+
+test("create an edition", async () => {
   const userId = "user-123";
   const title = "New Edition";
   const description = "This is a new edition";
 
-  const sut = new CreateEditionUseCase();
+  const sut = new CreateEditionUseCase(fakeEditionsRepository);
 
-  const edition = sut.execute({
+  const edition = await sut.execute({
     title,
     userId,
     description,

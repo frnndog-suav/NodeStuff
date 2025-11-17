@@ -1,4 +1,5 @@
 import { Edition } from "../entities/edition";
+import { EditionsRepository } from "../repositories/editions-repository";
 
 type TParams = {
   title: string;
@@ -7,12 +8,16 @@ type TParams = {
 };
 
 export class CreateEditionUseCase {
-  execute({ userId, description, title }: TParams) {
+  constructor(private repository: EditionsRepository) {}
+
+  async execute({ userId, description, title }: TParams) {
     const edition = new Edition({
       title,
       description,
       creatorId: userId,
     });
+
+    await this.repository.create(edition);
 
     return edition;
   }
