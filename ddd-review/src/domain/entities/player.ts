@@ -1,7 +1,20 @@
 import { User } from "./user";
 
-export class Player extends User {
-  constructor() {
-    super({ username: "", email: "", id: "" });
+type TPlayerProps = {
+  username: string;
+  email: string;
+};
+
+export class Player extends User<TPlayerProps> {
+  constructor(props: TPlayerProps, id?: string) {
+    super({ props, id });
+  }
+
+  get username() {
+    return this.props.username;
+  }
+
+  get email() {
+    return this.props.email;
   }
 }

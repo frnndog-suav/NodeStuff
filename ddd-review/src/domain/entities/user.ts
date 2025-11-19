@@ -1,31 +1,21 @@
 import { randomUUID } from "node:crypto";
 
-type TConstructorParams = {
-  id?: string;
-  email: string;
-  username: string;
+type TConstructorParams<T> = {
+  props: T;
+  id: string | undefined;
 };
 
-export class User {
+export class User<T> {
   private _id: string;
-  private _email: string;
-  private _username: string;
 
-  constructor({ username, email, id }: TConstructorParams) {
-    this._email = email;
-    this._username = username;
+  protected props: T;
+
+  constructor({ props, id }: TConstructorParams<T>) {
+    this.props = props;
     this._id = id ?? randomUUID();
   }
 
   get id() {
     return this._id;
-  }
-
-  get username() {
-    return this._username;
-  }
-
-  get email() {
-    return this._email;
   }
 }
