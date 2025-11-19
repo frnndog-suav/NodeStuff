@@ -7,13 +7,25 @@ type TConstructorParams = {
 };
 
 export class User {
-  public id: string;
-  public username: string;
-  public email: string;
+  private _id: string;
+  private _email: string;
+  private _username: string;
 
   constructor({ username, email, id }: TConstructorParams) {
-    this.email = email;
-    this.username = username;
-    this.id = id ?? randomUUID();
+    this._email = email;
+    this._username = username;
+    this._id = id ?? randomUUID();
+  }
+
+  get id() {
+    return this._id;
+  }
+
+  get username() {
+    return this._username;
+  }
+
+  get email() {
+    return this._email;
   }
 }

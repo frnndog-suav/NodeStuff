@@ -3,8 +3,8 @@ import { randomUUID } from "node:crypto";
 type TConstructorParams = {
   id?: string;
   title: string;
-  description: string;
   creatorId: string;
+  description: string;
 };
 
 export class Edition {
