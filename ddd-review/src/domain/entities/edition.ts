@@ -30,4 +30,19 @@ export class Edition extends Entity<TEditionProps> {
   get description() {
     return this.props.description;
   }
+
+  set description(description: string) {
+    this.props.description = description;
+    this.props.updatedAt = new Date();
+  }
+
+  set title(title: string) {
+    this.props.title = title;
+    this.props.updatedAt = new Date();
+  }
+
+  set creatorId(creatorId: string) {
+    this.props.creatorId = creatorId;
+    this.props.updatedAt = new Date();
+  }
 }
