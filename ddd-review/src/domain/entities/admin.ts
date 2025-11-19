@@ -25,4 +25,15 @@ export class Admin extends Entity<TAdminProps> {
   get email() {
     return this.props.email;
   }
+
+  set email(newEmail: string) {
+    this.props.email = newEmail;
+    this.props.updatedAt = new Date();
+  }
+
+  set username(newUsername: string) {
+    this.props.username = newUsername;
+    this.props.updatedAt = new Date();
+  }
+
 }
