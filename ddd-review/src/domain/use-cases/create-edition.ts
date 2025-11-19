@@ -11,7 +11,7 @@ export class CreateEditionUseCase {
   constructor(private repository: EditionsRepository) {}
 
   async execute({ userId, description, title }: TParams) {
-    const edition = new Edition({
+    const edition = Edition.create({
       title,
       description,
       creatorId: userId,
