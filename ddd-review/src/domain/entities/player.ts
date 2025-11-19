@@ -6,10 +6,6 @@ type TPlayerProps = {
 };
 
 export class Player extends User<TPlayerProps> {
-  constructor(props: TPlayerProps, id?: string) {
-    super({ props, id });
-  }
-
   get username() {
     return this.props.username;
   }
