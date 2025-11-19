@@ -1,22 +1,21 @@
-import { randomUUID } from "node:crypto";
+import { Entity } from "../core/entities/entity";
 
-type TConstructorParams = {
-  id?: string;
+type TAction = {
   title: string;
   editionId?: string;
   description: string;
 };
 
-export class Action {
-  public id: string;
-  public title: string;
-  public description: string;
-  public editionId: string | undefined;
+export class Action extends Entity<TAction> {
+  get title() {
+    return this.props.title;
+  }
 
-  constructor({ id, title, description, editionId }: TConstructorParams) {
-    this.title = title;
-    this.id = id ?? randomUUID();
-    this.editionId = editionId;
-    this.description = description;
+  get editionId() {
+    return this.props.editionId;
+  }
+
+  get description() {
+    return this.props.description;
   }
 }

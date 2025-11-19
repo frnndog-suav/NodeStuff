@@ -5,7 +5,7 @@ type TConstructorParams<T> = {
   id: string | undefined;
 };
 
-export class User<T> {
+export class Entity<T> {
   private _id: string;
 
   protected props: T;

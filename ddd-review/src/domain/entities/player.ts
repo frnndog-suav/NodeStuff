@@ -1,11 +1,11 @@
-import { User } from "./user";
+import { Entity } from "../core/entities/entity";
 
 type TPlayerProps = {
   username: string;
   email: string;
 };
 
-export class Player extends User<TPlayerProps> {
+export class Player extends Entity<TPlayerProps> {
   get username() {
     return this.props.username;
   }

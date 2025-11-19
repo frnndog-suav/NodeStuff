@@ -1,11 +1,11 @@
-import { User } from "./user";
+import { Entity } from "../core/entities/entity";
 
 type TAdminProps = {
   username: string;
   email: string;
 };
 
-export class Admin extends User<TAdminProps> {
+export class Admin extends Entity<TAdminProps> {
   get username() {
     return this.props.username;
   }
