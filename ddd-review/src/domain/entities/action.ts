@@ -2,10 +2,10 @@ import { Entity } from "../core/entities/entity";
 
 type TActionProps = {
   title: string;
-  editionId?: string;
-  description: string;
   createdAt: Date;
-  updatedAt?: Date;
+  description: string;
+  updatedAt?: Date | undefined;
+  editionId?: string | undefined;
 };
 
 export class Action extends Entity<TActionProps> {
@@ -29,5 +29,20 @@ export class Action extends Entity<TActionProps> {
 
   get description() {
     return this.props.description;
+  }
+
+  set description(description: string) {
+    this.props.description = description;
+    this.props.updatedAt = new Date();
+  }
+
+  set title(title: string) {
+    this.props.title = title;
+    this.props.updatedAt = new Date();
+  }
+
+  set editionId(editionId: string | undefined) {
+    this.props.editionId = editionId;
+    this.props.updatedAt = new Date();
   }
 }
