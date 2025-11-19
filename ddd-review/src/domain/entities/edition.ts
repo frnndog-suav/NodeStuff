@@ -4,9 +4,21 @@ type TEditionProps = {
   title: string;
   creatorId: string;
   description: string;
+  createdAt: Date;
+  updatedAt?: Date;
 };
 
 export class Edition extends Entity<TEditionProps> {
+  static create(props: Omit<TEditionProps, "createdAt" | "updatedAt">) {
+    return new Edition({
+      id: undefined,
+      props: {
+        ...props,
+        createdAt: new Date(),
+      },
+    });
+  }
+
   get title() {
     return this.props.title;
   }

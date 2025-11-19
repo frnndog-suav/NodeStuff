@@ -10,7 +10,7 @@ export class Entity<T> {
 
   protected props: T;
 
-  constructor({ props, id }: TConstructorParams<T>) {
+  protected constructor({ props, id }: TConstructorParams<T>) {
     this.props = props;
     this._id = id ?? randomUUID();
   }

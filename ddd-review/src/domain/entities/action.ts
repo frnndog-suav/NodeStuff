@@ -1,12 +1,24 @@
 import { Entity } from "../core/entities/entity";
 
-type TAction = {
+type TActionProps = {
   title: string;
   editionId?: string;
   description: string;
+  createdAt: Date;
+  updatedAt?: Date;
 };
 
-export class Action extends Entity<TAction> {
+export class Action extends Entity<TActionProps> {
+  static create(props: Omit<TActionProps, "createdAt" | "updatedAt">) {
+    return new Action({
+      id: undefined,
+      props: {
+        ...props,
+        createdAt: new Date(),
+      },
+    });
+  }
+
   get title() {
     return this.props.title;
   }
