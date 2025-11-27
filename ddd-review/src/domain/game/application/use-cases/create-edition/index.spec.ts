@@ -1,7 +1,7 @@
+import { Edition } from "@/domain/game/enterprise/entities/edition";
 import { expect, test } from "vitest";
-import { Edition } from "../../enterprise/entities/edition";
-import { EditionsRepository } from "../repositories/editions-repository";
-import { CreateEditionUseCase } from "./create-edition";
+import { CreateEditionUseCase } from ".";
+import { EditionsRepository } from "../../repositories/editions-repository";
 
 const fakeEditionsRepository: EditionsRepository = {
   async create(edition: Edition): Promise<void> {
