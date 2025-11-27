@@ -1,11 +1,12 @@
-import { Entity } from "@/domain/core/entities/entity";
+import { Entity } from "@/domain/core/entities/entity.js";
 
 type TEditionProps = {
   title: string;
-  creatorId: string;
-  description: string;
   createdAt: Date;
   updatedAt?: Date;
+  creatorId: string;
+  description: string;
+  imageUrl?: string | undefined;
 };
 
 export class Edition extends Entity<TEditionProps> {

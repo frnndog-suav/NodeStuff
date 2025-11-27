@@ -5,14 +5,16 @@ type TParams = {
   title: string;
   userId: string;
   description: string;
+  imageUrl?: string | undefined;
 };
 
 export class CreateEditionUseCase {
   constructor(private repository: EditionsRepository) {}
 
-  async execute({ userId, description, title }: TParams) {
+  async execute({ userId, description, title, imageUrl }: TParams) {
     const edition = Edition.create({
       title,
+      imageUrl,
       description,
       creatorId: userId,
     });

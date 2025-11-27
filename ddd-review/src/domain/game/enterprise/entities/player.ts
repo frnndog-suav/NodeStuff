@@ -1,10 +1,11 @@
-import { Entity } from "@/domain/core/entities/entity";
+import { Entity } from "@/domain/core/entities/entity.js";
 
 type TPlayerProps = {
-  username: string;
   email: string;
   createdAt: Date;
   updatedAt?: Date;
+  username: string;
+  imageUrl?: string | undefined;
 };
 
 export class Player extends Entity<TPlayerProps> {

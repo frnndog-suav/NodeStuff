@@ -1,10 +1,11 @@
-import { Entity } from "@/domain/core/entities/entity";
+import { Entity } from "@/domain/core/entities/entity.js";
 
 type TActionProps = {
   title: string;
   createdAt: Date;
   description: string;
   updatedAt?: Date | undefined;
+  imageUrl?: string | undefined;
   editionId?: string | undefined;
 };
 

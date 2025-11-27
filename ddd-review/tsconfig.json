@@ -3,7 +3,7 @@
   "compilerOptions": {
     "module": "nodenext",
     "target": "esnext",
-    "types": ["node"],
+    "types": ["node", "vitest/globals"],
     "lib": ["ES2023"],
     "sourceMap": true,
     "declaration": true,
