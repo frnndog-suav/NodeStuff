@@ -1,4 +1,4 @@
-import { Entity } from "../core/entities/entity";
+import { Entity } from "@/domain/core/entities/entity";
 
 type TEditionProps = {
   title: string;

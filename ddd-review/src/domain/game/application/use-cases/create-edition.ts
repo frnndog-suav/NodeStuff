@@ -1,4 +1,4 @@
-import { Edition } from "../entities/edition";
+import { Edition } from "../../enterprise/entities/edition";
 import { EditionsRepository } from "../repositories/editions-repository";
 
 type TParams = {

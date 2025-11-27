@@ -1,4 +1,4 @@
-import { Entity } from "../core/entities/entity";
+import { Entity } from "@/domain/core/entities/entity";
 
 type TAdminProps = {
   username: string;
@@ -35,5 +35,4 @@ export class Admin extends Entity<TAdminProps> {
     this.props.username = newUsername;
     this.props.updatedAt = new Date();
   }
-
 }
