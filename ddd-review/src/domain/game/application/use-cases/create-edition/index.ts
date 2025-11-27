@@ -1,4 +1,5 @@
 import { Edition } from "@/domain/game/enterprise/entities/edition.js";
+import { AdminsRepository } from "../../repositories/admin-repository.js";
 import { EditionsRepository } from "../../repositories/editions-repository.js";
 
 type TParams = {
@@ -9,9 +10,18 @@ type TParams = {
 };
 
 export class CreateEditionUseCase {
-  constructor(private repository: EditionsRepository) {}
+  constructor(
+    private editionRepository: EditionsRepository,
+    private adminRepository: AdminsRepository
+  ) {}
 
   async execute({ userId, description, title, imageUrl }: TParams) {
+    const admin = await this.adminRepository.findById(userId);
+
+    if (!admin) {
+      throw new Error("Admin not found");
+    }
+
     const edition = Edition.create({
       title,
       imageUrl,
@@ -19,7 +29,7 @@ export class CreateEditionUseCase {
       creatorId: userId,
     });
 
-    const createdEdition = await this.repository.create(edition);
+    const createdEdition = await this.editionRepository.create(edition);
 
     return createdEdition;
   }
