@@ -1,5 +1,5 @@
 import { Edition } from "../../enterprise/entities/edition.js";
 
 export interface EditionsRepository {
-  create(edition: Edition): Promise<void>;
+  create(edition: Edition): Promise<Edition>;
 }

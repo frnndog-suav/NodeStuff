@@ -4,7 +4,8 @@ import { Edition } from "@/domain/game/enterprise/entities/edition.js";
 export class InMemoryEditionsRepository implements EditionsRepository {
   public items: Edition[] = [];
 
-  async create(edition: Edition): Promise<void> {
+  async create(edition: Edition): Promise<Edition> {
     this.items.push(edition);
+    return edition;
   }
 }

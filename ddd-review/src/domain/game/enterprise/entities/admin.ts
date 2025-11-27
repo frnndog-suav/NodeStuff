@@ -15,6 +15,7 @@ export class Admin extends Entity<TAdminProps> {
       props: {
         ...props,
         createdAt: new Date(),
+        imageUrl: props.imageUrl,
       },
     });
   }

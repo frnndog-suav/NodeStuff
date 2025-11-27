@@ -19,8 +19,8 @@ export class CreateEditionUseCase {
       creatorId: userId,
     });
 
-    await this.repository.create(edition);
+    const createdEdition = await this.repository.create(edition);
 
-    return edition;
+    return createdEdition;
   }
 }
