@@ -1,4 +1,4 @@
-import { Admin } from "../../enterprise/entities/admin";
+import { Admin } from "../../enterprise/entities/admin.js";
 
 export interface AdminsRepository {
   create(admin: Admin): Promise<void>;

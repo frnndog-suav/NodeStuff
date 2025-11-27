@@ -1,4 +1,4 @@
-import { Edition } from "../../enterprise/entities/edition";
+import { Edition } from "../../enterprise/entities/edition.js";
 
 export interface EditionsRepository {
   create(edition: Edition): Promise<void>;

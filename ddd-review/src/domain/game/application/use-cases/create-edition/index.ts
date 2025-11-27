@@ -1,5 +1,5 @@
-import { Edition } from "../../../enterprise/entities/edition";
-import { EditionsRepository } from "../../repositories/editions-repository";
+import { Edition } from "@/domain/game/enterprise/entities/edition.js";
+import { EditionsRepository } from "../../repositories/editions-repository.js";
 
 type TParams = {
   title: string;
