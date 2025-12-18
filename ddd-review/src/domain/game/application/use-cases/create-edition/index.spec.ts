@@ -1,4 +1,5 @@
-import { Admin } from "@/domain/game/enterprise/entities/admin.js";
+import { makeAdmin } from "test/factories/make-admin.js";
+import { makeEdition } from "test/factories/make-edition.js";
 import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins-repository.js";
 import { InMemoryEditionsRepository } from "test/repositories/in-memory-editions-repository.js";
 import { CreateEditionUseCase } from "./index.js";
@@ -14,15 +15,12 @@ describe("Create edition use case", () => {
 
     sut = new CreateEditionUseCase(
       inMemoryEditionsRepository,
-      inMemoryAdminsRepository
+      inMemoryAdminsRepository,
     );
   });
 
   it("should be able to create an edition", async () => {
-    const admin = Admin.create({
-      email: "admin@example.com",
-      username: "adminuser",
-    });
+    const admin = makeAdmin();
 
     await inMemoryAdminsRepository.create(admin);
 
@@ -30,11 +28,9 @@ describe("Create edition use case", () => {
     const title = "New Edition";
     const description = "This is a new edition";
 
-    const edition = await sut.execute({
-      title,
-      userId,
-      description,
-    });
+    const testEdition = makeEdition({ title, creatorId: userId, description });
+
+    const edition = await sut.execute(testEdition);
 
     expect(edition.title).toEqual(title);
     expect(edition.creatorId).toEqual(userId);

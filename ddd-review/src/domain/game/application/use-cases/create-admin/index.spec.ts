@@ -1,3 +1,4 @@
+import { makeAdmin } from "test/factories/make-admin.js";
 import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins-repository.js";
 import { CreateAdminUseCase } from "./index.js";
 
@@ -15,11 +16,9 @@ describe("Create edition use case", () => {
     const username = "testuser";
     const imageUrl = "http://example.com/image.png";
 
-    const admin = await sut.execute({
-      email,
-      username,
-      imageUrl,
-    });
+    const testAdmin = makeAdmin({ email, username, imageUrl });
+
+    const admin = await sut.execute(testAdmin);
 
     expect(admin.email).toEqual(email);
     expect(admin.username).toEqual(username);

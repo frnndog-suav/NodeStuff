@@ -1,6 +1,6 @@
 import { Entity } from "@/domain/core/entities/entity.js";
 
-type TEditionProps = {
+export type TEditionProps = {
   title: string;
   createdAt: Date;
   updatedAt?: Date;

@@ -1,6 +1,6 @@
 import { Entity } from "@/domain/core/entities/entity.js";
 
-type TAdminProps = {
+export type TAdminProps = {
   email: string;
   createdAt: Date;
   updatedAt?: Date;
