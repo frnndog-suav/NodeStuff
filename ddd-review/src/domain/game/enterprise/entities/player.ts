@@ -9,9 +9,11 @@ type TPlayerProps = {
 };
 
 export class Player extends Entity<TPlayerProps> {
-  static create(props: Omit<TPlayerProps, "createdAt" | "updatedAt">) {
+  static create(
+    props: Omit<TPlayerProps, "createdAt" | "updatedAt"> & { id?: string },
+  ) {
     return new Player({
-      id: undefined,
+      id: props.id,
       props: {
         ...props,
         createdAt: new Date(),

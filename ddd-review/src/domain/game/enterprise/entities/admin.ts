@@ -9,9 +9,9 @@ export type TAdminProps = {
 };
 
 export class Admin extends Entity<TAdminProps> {
-  static create(props: Omit<TAdminProps, "createdAt" | "updatedAt">) {
+  static create(props: Omit<TAdminProps, "createdAt" | "updatedAt"> & { id?: string | undefined }) {
     return new Admin({
-      id: undefined,
+      id: props.id,
       props: {
         ...props,
         createdAt: new Date(),

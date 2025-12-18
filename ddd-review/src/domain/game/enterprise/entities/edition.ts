@@ -10,9 +10,11 @@ export type TEditionProps = {
 };
 
 export class Edition extends Entity<TEditionProps> {
-  static create(props: Omit<TEditionProps, "createdAt" | "updatedAt">) {
+  static create(
+    props: Omit<TEditionProps, "createdAt" | "updatedAt"> & { id?: string },
+  ) {
     return new Edition({
-      id: undefined,
+      id: props.id,
       props: {
         ...props,
         createdAt: new Date(),

@@ -10,9 +10,9 @@ type TActionProps = {
 };
 
 export class Action extends Entity<TActionProps> {
-  static create(props: Omit<TActionProps, "createdAt" | "updatedAt">) {
+  static create(props: Omit<TActionProps, "createdAt" | "updatedAt"> & { id?: string }) {
     return new Action({
-      id: undefined,
+      id: props.id,
       props: {
         ...props,
         createdAt: new Date(),
