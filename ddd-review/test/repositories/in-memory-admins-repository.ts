@@ -15,11 +15,6 @@ export class InMemoryAdminsRepository implements AdminsRepository {
 
   async findById(id: string): Promise<Admin | null> {
     const admin = this.items.find((item) => item.id === id);
-
-    if (!admin) {
-      throw new Error("Admin not found");
-    }
-
-    return admin;
+    return admin || null;
   }
 }
